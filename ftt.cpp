@@ -11,6 +11,8 @@
 #include <map>
 #include "DoublyLinkedList.h"
 #include "Coin.h"
+#include "Command.h"
+#include "Helper.h"
 
 void loadFoodData(const char *food_file, DoublyLinkedList &foodList);
 void displayMainMenu();
@@ -77,7 +79,8 @@ int main(int argc, char **argv)
         // Process the selected option
         if (option == 1) {
             // Display Meal Options
-            foodList->printList();
+            DisplayMealCommand displayCommand;
+            displayCommand.execute(*foodList); // Execute the command
         } else if (option == 2) {
             // Purchase Meal
             purchaseMeal(*foodList, coins);
@@ -88,7 +91,8 @@ int main(int argc, char **argv)
             exitProgram = true;
         } else if (option == 4) {
             // Add Food
-            addFoodItem(*foodList);
+            AddFoodCommand addCommand;
+            addCommand.execute(*foodList);
         } else if (option == 5) {
             // Remove Food
             removeFoodItem(*foodList);
@@ -562,20 +566,6 @@ void saveCoinData(const char *coin_file, std::vector<Coin>& coins) {
     file.close();
 }
 
-// helper method to read and return user input in string
-std::string readInput() {
-    std::string input;
-    // if Ctril+D (end of file) is not pressed
-    if(!std::cin.eof()) {
-        std::getline(std::cin, input);
-    }    
-    else{ // If the user presses Ctrl+D, exit the program     
-        std::cerr << "\nGoodbye!" << std::endl;
-        exit(EXIT_FAILURE);
-    }
-    return input;
-}
-
 // helper method to validate if the given string is a number
 // Adapted from Assignment 1 Start Code
 bool isNumber(std::string s) {
@@ -634,9 +624,3 @@ void removeStock(DoublyLinkedList &foodList){
 
 }
 
-// Function to check if the price is divisible by 5 cents
-bool isDivisibleByFiveCents(const std::string& price_str) {
-    double price = std::stod(price_str); // Convert string to double
-    int price_cents = static_cast<int>(std::round(price * 100)); // Convert to cents
-    return price_cents % 5 == 0; // Check if divisible by 5 cents
-}
