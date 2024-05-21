@@ -85,4 +85,36 @@ void AddFoodCommand::addFoodItem(DoublyLinkedList &foodList) const {
     Node* node = new Node;
     node->data = foodItem;
     foodList.addNode(node);
-}
+};
+
+// Remove the food item based on input food id
+void RemoveFoodCommand::removeFoodItem(DoublyLinkedList &foodList) const {
+    bool valid_id = false;
+    while(!valid_id) {
+        std::cout << "Enter the food id of the food to remove from the menu: ";
+        std::string string_id = readInput();
+
+        // return to main menu if hitting enter on an empty line
+        if (string_id.size() == 0) {
+            return;
+        }
+        
+        // get the food item (node) based on input id
+        Node* toRemove = foodList.getNode(string_id);
+
+        // check if the returned Node pointer contain the Node (id found)
+        if (toRemove != nullptr) {
+            // Display item removed message on console
+            std::cout << "\"" << toRemove->data->id << " – " 
+                << toRemove->data->description << "\"" 
+                << " has been removed from the system." << std::endl;
+            // remove the food item from the menu
+            foodList.removeNode(toRemove);
+            valid_id = true;
+        }
+        // display error message if food id not found, ask for a valid id
+        else{
+            std::cout << "Invalid input. Please enter a valid food id.\n" << std::endl;
+        }
+    }
+};

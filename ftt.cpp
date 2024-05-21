@@ -94,7 +94,9 @@ int main(int argc, char **argv)
             addCommand.execute(*foodList);
         } else if (option == 5) {
             // Remove Food
-            removeFoodItem(*foodList);
+            //removeFoodItem(*foodList);
+            RemoveFoodCommand removeCommand;
+            removeCommand.execute(*foodList);
         } else if (option == 6) {
             // Display Balance
             printBalance(coins);
@@ -240,38 +242,6 @@ void printBalance(const std::vector<Coin>& coins) {
 
     std::cout << std::string(15 + maxValueLength, '-') << std::endl;
     std::cout << std::right << std::setw(21) << "$ " << std::fixed << std::setprecision(2) << roundedTotalBalance << ".00" << std::endl;
-}
-
-// Remove the food item based on input food id
-void removeFoodItem(DoublyLinkedList &foodList) {
-    bool valid_id = false;
-    while(!valid_id) {
-        std::cout << "Enter the food id of the food to remove from the menu: ";
-        std::string string_id = readInput();
-
-        // return to main menu if hitting enter on an empty line
-        if (string_id.size() == 0) {
-            return;
-        }
-        
-        // get the food item (node) based on input id
-        Node* toRemove = foodList.getNode(string_id);
-
-        // check if the returned Node pointer contain the Node (id found)
-        if (toRemove != nullptr) {
-            // Display item removed message on console
-            std::cout << "\"" << toRemove->data->id << " – " 
-                << toRemove->data->description << "\"" 
-                << " has been removed from the system." << std::endl;
-            // remove the food item from the menu
-            foodList.removeNode(toRemove);
-            valid_id = true;
-        }
-        // display error message if food id not found, ask for a valid id
-        else{
-            std::cout << "Invalid input. Please enter a valid food id.\n" << std::endl;
-        }
-    }
 }
 
 // Purchase the food item

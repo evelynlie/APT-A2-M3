@@ -29,4 +29,14 @@ private:
     void addFoodItem(DoublyLinkedList& foodList) const;  
 };
 
+class RemoveFoodCommand : public Command {
+public:
+    void execute(DoublyLinkedList& foodList) const {
+        removeFoodItem(foodList);
+    }
+
+private:
+    void removeFoodItem(DoublyLinkedList& foodList) const;  
+};
+
 #endif  // COMMAND_H
