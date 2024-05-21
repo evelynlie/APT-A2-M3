@@ -75,11 +75,12 @@ int main(int argc, char **argv)
             }
         }
 
+        std::unique_ptr<Command> command; // unique_ptr to hold the command instance
+
         // Process the selected option
         if (option == 1) {
             // Display Meal Options
-            DisplayMealCommand displayCommand;
-            displayCommand.execute(*foodList); // Execute the command
+            command = std::make_unique<DisplayMealCommand>(); // Assign a DisplayMealCommand instance to the unique_ptr
         } else if (option == 2) {
             // Purchase Meal
             purchaseMeal(*foodList, coins);
@@ -90,13 +91,10 @@ int main(int argc, char **argv)
             exitProgram = true;
         } else if (option == 4) {
             // Add Food
-            AddFoodCommand addCommand;
-            addCommand.execute(*foodList);
+            command = std::make_unique<AddFoodCommand>(); // Assign a AddFoodCommand instance to the unique_ptr
         } else if (option == 5) {
             // Remove Food
-            //removeFoodItem(*foodList);
-            RemoveFoodCommand removeCommand;
-            removeCommand.execute(*foodList);
+            command = std::make_unique<RemoveFoodCommand>(); // Assign a RemoveFoodCommand instance to the unique_ptr
         } else if (option == 6) {
             // Display Balance
             printBalance(coins);
@@ -104,9 +102,13 @@ int main(int argc, char **argv)
             // Abort Program and free memory
             exitProgram = true;
         }
-        //This is for a debug method to remove food from stock and test purchase meal
+        // This is for a debug method to remove food from stock and test purchase meal
         else if (option == 999) {
             removeStock(*foodList);
+        }
+
+        if (command) { // If the unique_ptr holds a valid instance
+            command->execute(*foodList); // Execute the command
         }
 
         std::cout << std::endl;

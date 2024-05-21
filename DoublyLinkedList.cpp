@@ -76,36 +76,51 @@ void DoublyLinkedList::clear() {
 
 // Get a node based on the given ID
 Node* DoublyLinkedList::getNode(std::string id) const {
-    // Extract the numeric part of the ID "F0001" -> "0001"
-    int idNumber = std::stoi(id.substr(1));
+    Node* returnNode = nullptr;
 
-    // Determine the middle index of the list
-    int middleIndex = count / 2;
+    // If the node is the tail
+    if (tail->data->id == id) {
+        return tail;
+    }
 
-    // Check if the target ID number is less than or equal to the middle index
-    // If id number is less than or equal to the middle index, traverse from head to middle
-    if (idNumber <= middleIndex) {
-        // Traverse from head to middle
-        Node* current = head;
-        while (current) {
-            if (current->data->id == id) {
-                return current;
+    // If the node is the head
+    if (head->data->id == id) {
+        return head;
+    }
+
+    // If id is empty, return nullptr
+    if (!id.empty()) {
+        // Extract the numeric part of the ID
+        int idNumber = std::stoi(id.substr(1));
+
+        // Get the middle index of the list
+        int middleIndex = count / 2;
+
+        // If the id number is less than the middle index, start from the head
+        if (idNumber < middleIndex) {
+            Node* current = head;
+            // Traverse the linked list until we found the node matched the id
+            while(current != nullptr && returnNode == nullptr){
+                // if node is found, set returnNode to point to the node
+                if (current->data->id == id) {
+                    returnNode = current;
+                }
+                current = current->next;
             }
-            current = current->next;
-        }
-    // If id number is greater than the middle index, traverse from tail to middle
-    } else {
-        // Traverse from tail to middle
-        Node* current = tail;
-        while (current) {
-            if (current->data->id == id) {
-                return current;
+        } else { // If the id number is greater than the middle index, start from the tail
+            Node* current = tail;
+            // Traverse the linked list until we found the node matched the id
+            while(current != nullptr && returnNode == nullptr){
+                // if node is found, set returnNode to point to the node
+                if (current->data->id == id) {
+                    returnNode = current;
+                }
+                current = current->prev;
             }
-            current = current->prev;
         }
     }
 
-    return nullptr;
+    return returnNode;
 }
 
 // Generate the new food item ID
@@ -115,15 +130,26 @@ std::string DoublyLinkedList::generateFoodID() const {
         return "F0001";
     }
 
-    // Get the last ID from the tail node
-    std::string lastID = tail->data->id;
+    Node* current = head;
+    Node* lastIDNode = head;
 
-    // Extract the numeric part of the ID, which is the last 4 characters
+    //Since the list is sorted alphabetically, the last node in the list won't necessarily have the latest ID.
+    //So, we must keep track of the node with the latest ID rather than assuming the last node has it.
+    while (current != nullptr) {
+
+        if(current->data->id > lastIDNode->data->id){
+            lastIDNode = current;
+        }
+        current = current->next;
+    }
+
+    // Convert the last food item id to number, which is the last 4 characters of the id
+    std::string lastID = lastIDNode->data->id;
     std::string last4Chars = lastID.substr(lastID.length() - 4);
     int lastIDNumber = std::stoi(last4Chars) + 1;
 
-    // Create the new ID by incrementing the last ID number and formatting it correctly
-    std::string newID = "F" + std::string(4 - std::to_string(lastIDNumber).length(), '0') + std::to_string(lastIDNumber);
-
-    return newID;
+    // Concat the lastIDNumber to the string "F" and add 0 until the length of the id is 5
+    std::stringstream newID;
+    newID << 'F' << std::setw(4) << std::setfill('0') << lastIDNumber;
+    return newID.str();
 }
