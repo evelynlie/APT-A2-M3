@@ -6,11 +6,15 @@
 #include "Helper.h"
 #include "Coin.h"
 
+// Base class for all commands
 class Command
 {
 public:
+    // Constructor and Destructor
     Command() {}
     virtual ~Command() {}
+
+    // Execute the command based on the given parameters
     virtual void execute(std::vector<Coin>& coins) const {};
     virtual void execute(DoublyLinkedList& foodList) const {};
     virtual void execute(char* food_file, DoublyLinkedList& foodList) const {};
@@ -19,6 +23,7 @@ public:
     virtual void execute(char* food_file, char* coin_file, DoublyLinkedList& foodList, std::vector<Coin>& coins) const {};
 };
 
+// Display the meal items
 class DisplayMealCommand : public Command {
 public:
     void execute(DoublyLinkedList& foodList) const {
@@ -26,6 +31,7 @@ public:
     };
 };
 
+// Add a new food item
 class AddFoodCommand : public Command {
 public:
     void execute(DoublyLinkedList& foodList) const {
@@ -36,6 +42,7 @@ private:
     void addFoodItem(DoublyLinkedList& foodList) const;  
 };
 
+// Remove a food item
 class RemoveFoodCommand : public Command {
 public:
     void execute(DoublyLinkedList& foodList) const {
@@ -46,6 +53,7 @@ private:
     void removeFoodItem(DoublyLinkedList& foodList) const;  
 };
 
+// Purchase a meal
 class PurchaseMealCommand : public Command {
 public:
     void execute(DoublyLinkedList& foodList, std::vector<Coin>& coins) const {
@@ -56,6 +64,7 @@ private:
     void purchaseMeal(DoublyLinkedList& foodList, std::vector<Coin> &coins) const;  
 };
 
+// Display the balance
 class DisplayBalanceCommand : public Command {
 public:
     void execute(std::vector<Coin>& coins) const {
@@ -66,6 +75,7 @@ private:
     void displayBalance(std::vector<Coin>& coins) const;  
 };
 
+// Save the data
 class SaveCommand : public Command {
 public:
     void execute(char* food_file, char* coin_file, DoublyLinkedList& foodList, std::vector<Coin>& coins) const {
@@ -78,6 +88,7 @@ private:
     void saveCoinData(char* coin_file, std::vector<Coin>& coins) const;
 };
 
+// Load the data
 class LoadCommand : public Command {
 public:
     void execute(char* food_file, DoublyLinkedList& foodList) const {
@@ -92,6 +103,7 @@ private:
     void loadFoodData(char* food_file, DoublyLinkedList& foodList) const;
 };
 
+// Remove food stock
 class RemoveStockCommand : public Command {
 public:
     void execute(DoublyLinkedList& foodList) const {

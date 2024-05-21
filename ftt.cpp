@@ -50,7 +50,6 @@ int main(int argc, char **argv)
 
     try {
         coins = command->execute(argv[2]);
-        // coins = Coin::loadCoinData(argv[2]);
     } catch (const std::exception& e) {
         std::cerr << "Error: " << e.what() << std::endl;
         delete foodList;
@@ -110,7 +109,7 @@ int main(int argc, char **argv)
             if (option == 2) { // Purchase Meal command requires coins
                 command->execute(*foodList, coins); 
             } 
-            else if (option == 3) { 
+            else if (option == 3) { // Save and Exit
                 command->execute(argv[1], argv[2], *foodList, coins);
             }
             else if (option == 6) { // Display Balance

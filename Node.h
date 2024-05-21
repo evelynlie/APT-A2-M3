@@ -43,19 +43,19 @@ public:
 class FoodItem
 {
 public:
-    //the unique id for this food item
+    // The unique id for this food item
     std::string id;
 
-    //the name of this food item
+    // The name of this food item
     std::string name;
     
-    //the description of this food item   
+    // The description of this food item   
     std::string description;
     
-    //the price of this food item
+    // The price of this food item
     Price price;
     
-    // how many of this food item do we have on hand? 
+    // How many of this food item do we have on hand? 
     unsigned on_hand;    
 };
 
@@ -68,19 +68,19 @@ public:
     Node();
     ~Node();
     
-    // pointer to the data held for the node 
+    // Pointer to the data held for the node 
     FoodItem* data;
 
-    // pointer to the next node in the list 
+    // Pointer to the next node in the list 
     Node* next;
 
-    // pointer to the previous node in the list
+    // Pointer to the previous node in the list
     Node* prev;
 
-    // display food item to console
+    // Display food item to console
     void printNode() const;
 
-    // write node data into foods.dat file
+    // Write node data into foods.dat file
     void writeNode(std::ostream& food_file) const;
 };
 

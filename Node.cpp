@@ -9,10 +9,10 @@ Node::Node(){
 
 Node::~Node(){
     // TODO
-    delete data; // delete the FoodItem
+    delete data; // Delete the FoodItem
 };
 
-// display food item to console
+// Display food item to console
 void Node::printNode() const {
     std::cout << std::left << std::setw(5) << data->id << "|";
     std::cout << std::left << std::setw(50) << data->name << "|";
@@ -21,7 +21,7 @@ void Node::printNode() const {
         << std::setfill(' ') << std::endl;
 }
 
-// write node data into foods.dat file
+// Write node data into foods.dat file
 void Node::writeNode(std::ostream& food_file) const {
     food_file << data->id << "|" 
         << data->name << "|" 

@@ -1,9 +1,11 @@
 #include "DoublyLinkedList.h"
 
+// Constructor extending the LinkedList constructor
 DoublyLinkedList::DoublyLinkedList() : LinkedList() {
     tail = nullptr;
 }
 
+// Destructor
 DoublyLinkedList::~DoublyLinkedList() {
     clear();
 }

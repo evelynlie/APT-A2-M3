@@ -40,9 +40,9 @@ void LinkedList::removeNode(Node *node) {
         while (temp->next != node) {
             temp = temp->next;
         }
-        // link the previous node to the next node
+        // Link the previous node to the next node
         temp->next = node->next;
-        // remove node from linked list
+        // Remove node from linked list
         delete node;
     }
     count--;
@@ -55,7 +55,7 @@ Node* LinkedList::getNode(std::string id) const {
     Node* current = head;
     // Traverse the linked list until we found the node matched the id
     while(current != nullptr && returnNode == nullptr){
-        // if node is found, set returnNode to point to the node
+        // If node is found, set returnNode to point to the node
         if (current->data->id == id) {
             returnNode = current;
         }
@@ -72,11 +72,11 @@ void LinkedList::clear(){
     
     // Traverse all node in the linked list
     while (current != nullptr) {
-        // get the next node
+        // Get the next node
         next_node = current->next;
-        // delete current node from linked list
+        // Delete current node from linked list
         removeNode(current);
-        // set current node to next node
+        // Set current node to next node
         current = next_node;
     }
 }
