@@ -141,7 +141,7 @@ void PurchaseMealCommand::purchaseMeal(DoublyLinkedList &foodList, std::vector<C
 
     while(!pickedFood && !cancel){
         // Prompt user for food id
-        std::cout << "Please enter the ID of the food you wish to purchase(or leave empty to cancel):" << std::endl;
+        std::cout << "Please enter the ID of the food you wish to purchase (or press enter to cancel):" << std::endl;
         input = readInput();
         
         // Get the food item (node) based on input id

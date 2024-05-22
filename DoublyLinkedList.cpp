@@ -92,32 +92,35 @@ Node* DoublyLinkedList::getNode(std::string id) const {
 
     // If id is empty, return nullptr
     if (!id.empty()) {
-        // Extract the numeric part of the ID
-        int idNumber = std::stoi(id.substr(1));
+        // Validate the id
+        if (id[0] == 'F' && id.length() == 5){
+            // Extract the numeric part of the ID
+            int idNumber = std::stoi(id.substr(1));
 
-        // Get the middle index of the list
-        int middleIndex = count / 2;
+            // Get the middle index of the list
+            int middleIndex = count / 2;
 
-        // If the id number is less than the middle index, start from the head
-        if (idNumber < middleIndex) {
-            Node* current = head;
-            // Traverse the linked list until we found the node matched the id
-            while(current != nullptr && returnNode == nullptr){
-                // if node is found, set returnNode to point to the node
-                if (current->data->id == id) {
-                    returnNode = current;
+            // If the id number is less than the middle index, start from the head
+            if (idNumber < middleIndex) {
+                Node* current = head;
+                // Traverse the linked list until we found the node matched the id
+                while(current != nullptr && returnNode == nullptr){
+                    // if node is found, set returnNode to point to the node
+                    if (current->data->id == id) {
+                        returnNode = current;
+                    }
+                    current = current->next;
                 }
-                current = current->next;
-            }
-        } else { // If the id number is greater than the middle index, start from the tail
-            Node* current = tail;
-            // Traverse the linked list until we found the node matched the id
-            while(current != nullptr && returnNode == nullptr){
-                // if node is found, set returnNode to point to the node
-                if (current->data->id == id) {
-                    returnNode = current;
+            } else { // If the id number is greater than the middle index, start from the tail
+                Node* current = tail;
+                // Traverse the linked list until we found the node matched the id
+                while(current != nullptr && returnNode == nullptr){
+                    // if node is found, set returnNode to point to the node
+                    if (current->data->id == id) {
+                        returnNode = current;
+                    }
+                    current = current->prev;
                 }
-                current = current->prev;
             }
         }
     }
