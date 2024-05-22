@@ -548,6 +548,7 @@ std::vector<Coin> Coin::loadCoinData(const std::string& filename) {
         if (delimiterCount != 1) {
             // display error message
             std::cerr << "Error: Incorrect number of values in coins.dat" << std::endl;
+            std::cerr << "The correct format for a coin is \"<denomination>,<quantity>\"." << std::endl;
             // exit program
             exit(EXIT_FAILURE);
         }
@@ -562,6 +563,7 @@ std::vector<Coin> Coin::loadCoinData(const std::string& filename) {
             denom != FIVE_DOLLARS && denom != TEN_DOLLARS &&
             denom != TWENTY_DOLLARS && denom != FIFTY_DOLLARS) {
             std::cerr << "Error: Invalid denomination in coins.dat" << std::endl;
+            std::cerr << "The valid denominations are 5, 10, 20, 50, 100, 200, 500, 1000, 2000, 5000." << std::endl;
             // Exist the program if denomination is invalid
             exit(EXIT_FAILURE);
         }
