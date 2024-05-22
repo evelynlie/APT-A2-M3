@@ -13,17 +13,7 @@
 #include "Command.h"
 #include "Helper.h"
 
-void loadFoodData(const char *food_file, DoublyLinkedList &foodList);
 void displayMainMenu();
-void printBalance(const std::vector<Coin>& coins);
-void removeFoodItem(DoublyLinkedList &foodList);
-void saveFoodData(const char *food_file, DoublyLinkedList &foodList);
-void saveCoinData(const char *coin_file, std::vector<Coin> &coins);
-void purchaseMeal(DoublyLinkedList &foodList, std::vector<Coin> &coins);
-std::string readInput();
-bool isNumber(std::string s);
-void removeStock(DoublyLinkedList &foodList);
-bool isDivisibleByFiveCents(const std::string& price_str);
 
 /**
  * manages the running of the program, initialises data structures, loads
