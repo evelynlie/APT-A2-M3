@@ -414,7 +414,8 @@ void LoadCommand::loadFoodData(char *food_file, DoublyLinkedList &foodList) cons
         // If the ID is not in the correct format (Fxxxx), exit the program
         if (token.length() != IDLEN || token.substr(0, 1) != "F"){
             // Error: ID format is incorrect
-            std::cerr << "Error: ID format is incorrect" << std::endl;
+            std::cerr << "Error: The format of an item's ID is incorrect in " << food_file << "." << std::endl;
+            std::cerr << "The correct ID format is \"Fxxxx\", where x is a number." << std::endl;
             exit(EXIT_FAILURE);
         }
         foodItem->id = token;
@@ -423,7 +424,8 @@ void LoadCommand::loadFoodData(char *food_file, DoublyLinkedList &foodList) cons
         std::getline(iss, token, '|');
         if (token.length() > NAMELEN) {
             // Error: Name is too long
-            std::cerr << "Error: Name is too long" << std::endl;
+            std::cerr << "Error: An item's name is too long in " << food_file << "." << std::endl;
+            std::cerr << "The maximum length of an item's name is 40 characters." << std::endl;
             exit(EXIT_FAILURE);
         }
         foodItem->name = token;
@@ -432,7 +434,8 @@ void LoadCommand::loadFoodData(char *food_file, DoublyLinkedList &foodList) cons
         std::getline(iss, token, '|');
         if (token.length() > DESCLEN) {
             // Error: Description is too long
-            std::cerr << "Error: Description is too long" << std::endl;
+            std::cerr << "Error: An item's description is too long in " << food_file << "." << std::endl;
+            std::cerr << "The maximum length of an item's description is 255 characters." << std::endl;
             exit(EXIT_FAILURE);
         }
         foodItem->description = token;
@@ -442,21 +445,43 @@ void LoadCommand::loadFoodData(char *food_file, DoublyLinkedList &foodList) cons
 
         // Extracting Price into dollars and cents
         std::getline(iss, token, '|');
-        size_t dotPosition = token.find('.'); // Find the position of the dot
-        if (dotPosition == std::string::npos || token.substr(dotPosition + 1).length() != 2) { // If the dot is not found or there are not 2 digits after the dot
-            // Error: Price format is incorrect
-            std::cerr << "Error: Price format is incorrect" << std::endl;
+        size_t decimalPointPos = token.find('.'); // Find the position of the dot
+        // Validate input and print specific error message if invalid
+        if (decimalPointPos == std::string::npos) {
+            std::cerr << "Error: An item's price should have a decimal point in between the dollar and cent.\n" << std::endl;
             exit(EXIT_FAILURE);
         }
-        std::string string_dollars = token.substr(0, dotPosition);
-        std::string string_cents = token.substr(dotPosition + 1);
-        foodItem->price.dollars = std::stoi(string_dollars);
-        foodItem->price.cents = std::stoi(string_cents);
+        else if (decimalPointPos <= 0 || decimalPointPos >= token.length() - 1) {
+            std::cerr << "Error: An item's price should have at least 1 digit before and must have exactly 2 digits after the decimal point.\n" << std::endl;
+            exit(EXIT_FAILURE);
+        }
+        else if (!std::all_of(token.begin(), token.begin() + decimalPointPos, ::isdigit) || !std::all_of(token.begin() + decimalPointPos + 1, token.end(), ::isdigit)) {
+            std::cerr << "Error: An item's price should have digits only before and after the decimal point.\n" << std::endl;
+            exit(EXIT_FAILURE);
+        }
+        else if (token.substr(token.find('.') + 1).length() != 2) {
+            std::cerr << "Error: An item's price should have exactly 2 digit after the decimal point.\n" << std::endl;
+            exit(EXIT_FAILURE);
+        }
+        else if (std::stod(token) <= 0.00) {
+            std::cerr << "Error: An item's price should be greater than 0.00.\n" << std::endl;
+            exit(EXIT_FAILURE);
+        }
+        else if (!isDivisibleByFiveCents(token)) {
+            std::cerr << "Error: An item's price should be divisible by 5 cents so that the vending machine can give change.\n" << std::endl;
+            exit(EXIT_FAILURE);
+        }
+        else {
+            std::string string_dollars = token.substr(0, decimalPointPos);
+            std::string string_cents = token.substr(decimalPointPos + 1);
+            foodItem->price.dollars = std::stoi(string_dollars);
+            foodItem->price.cents = std::stoi(string_cents);
 
-        // Create a new node and add it to the linked list
-        Node* node = new Node;
-        node->data = foodItem;
-        foodList.addNode(node);
+            // Create a new node and add it to the linked list
+            Node* node = new Node;
+            node->data = foodItem;
+            foodList.addNode(node);
+        }
     }
     file.close();
 };
