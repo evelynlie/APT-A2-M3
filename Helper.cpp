@@ -25,30 +25,34 @@ bool isDivisibleByFiveCents(const std::string& price_str) {
 }
 
 // Helper method to validate if the given string is a number
-// Adapted from Assignment 1 Start Code
 bool isNumber(std::string s) {
+    if (s.empty()){
+        return false;
+    }
+    
+    // Create an iterator to traverse the string from the beginning
     std::string::const_iterator it = s.begin();
-    char dot = '.';
-    int nb_dots = 0;
-    bool exit = false;
-    while (it != s.end() && exit == false) 
-    {
-        if (*it == dot)
-        {
-            nb_dots++;
-            if (nb_dots>1)
-            {
-                exit = true;
-            }
-        }   
-        else if (!isdigit(*it))
-        {
-            exit = true;
-        } 
 
+    char dot = '.';    
+    int nb_dots = 0;
+
+    // Loop through each character in the string
+    while (it != s.end()) {
+        if (*it == dot) {
+            nb_dots++;
+            // If more than one dot is found, it's not a valid number, return false
+            if (nb_dots > 1) {
+                return false;
+            }
+        } else if (!isdigit(*it)) {
+            // If the current character is not a digit, return false
+            return false;
+        }
+        // Move to the next character in the string
         ++it;
     }
-    return !s.empty() && s[0] != dot && it == s.end();
+
+    return s[0] != dot;
 }
 
 // Helper method for sorting coins
