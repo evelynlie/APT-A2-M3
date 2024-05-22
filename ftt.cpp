@@ -95,7 +95,7 @@ int main(int argc, char **argv)
             command = std::make_unique<RemoveStockCommand>();
         }
 
-        if (command) { // If the unique_ptr holds a valid instance, execute the command based on the selected option
+        if (command && option != 7) { // If the unique_ptr holds a valid instance and exitProgram is false, execute the command based on the selected option
             if (option == 2) { // Purchase Meal command requires coins
                 command->execute(*foodList, coins); 
             } 

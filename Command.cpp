@@ -16,20 +16,20 @@ void AddFoodCommand::addFoodItem(DoublyLinkedList &foodList) const {
     while (!valid_name) {
         std::cout << "Enter the item name: ";
         name = readInput();
-        if (name.size() > NAMELEN) { // display error message if exceed expected name length, ask for a valid name
+        if (name.size() > NAMELEN) { // Display error message if exceed expected name length, ask for a valid name
             std::cout << "Invalid input. Please enter a valid name with a maximum length of " << NAMELEN << " characters.\n" << std::endl;
         }
         else if (name.size() == 0) {
-            return; // return to main menu if hitting enter on an empty line
+            return; // Return to main menu if hitting enter on an empty line
         }
         else {
-            //Capitalise the first letter of the new food name so that the list stays in alphabetical order
+            // Capitalise the first letter of the new food name so that the list stays in alphabetical order
             name[0] = toupper(name[0]);
             valid_name = true;
         }
     }
 
-    // prompt user for food description
+    // Prompt user for food description
     bool valid_description = false;
     while (!valid_description) {
         std::cout << "Enter the item description: ";
@@ -38,39 +38,44 @@ void AddFoodCommand::addFoodItem(DoublyLinkedList &foodList) const {
             std::cout << "Invalid input. Please enter a valid description with a maximum length of " << DESCLEN << " characters.\n" << std::endl;
         }
         else if (description.size() == 0) {
-            return; // return to main menu if hitting enter on an empty line
+            return; // Return to main menu if hitting enter on an empty line
         }
         else {
             valid_description = true;
         }
     }
 
-    // prompt user for food price
+    // Prompt user for food price
     bool valid_price = false;
     while (!valid_price) {
         std::cout << "Enter the price for this item (in dollars and cents): ";
         price = readInput();
-        // return to main menu if hitting enter on an empty line
+        // Return to main menu if hitting enter on an empty line
         if (price.size() == 0) {
             return;
         }
-        // Check if input has a decimal point and consists of digits before and after it
+        // Validate input and print specific error message if invalid
         size_t decimalPointPos = price.find('.');
-        if (decimalPointPos != std::string::npos &&
-            decimalPointPos > 0 && // Decimal point should not be at the beginning
-            decimalPointPos < price.length() - 1 && // Decimal point should not be at the end
-            std::all_of(price.begin(), price.begin() + decimalPointPos, ::isdigit) && // Digits before and after decimal point
-            std::all_of(price.begin() + decimalPointPos + 1, price.end(), ::isdigit) &&
-            price.substr(price.find('.') + 1).length() == 2 && 
-            std::stod(price) > 0.00 && // Price is should be greater than 0.00
-            isDivisibleByFiveCents(price)) {  // Price should be divisible by 5 cents so that the vending machine can give change
-
-            valid_price = true;
+        if (decimalPointPos == std::string::npos) {
+            std::cout << "Invalid input. Price should have a decimal point in between the dollar and cent.\n" << std::endl;
         }
-
-        // If input is invalid, clear input buffer and prompt again
-        if (!valid_price) {
-            std::cout << "Invalid input. Please enter a valid price (in cents) with a decimal point and digits only.\n" << std::endl;
+        else if (decimalPointPos <= 0 || decimalPointPos >= price.length() - 1) {
+            std::cout << "Invalid input. Price should have at least 1 digit before and must have exactly 2 digits after the decimal point.\n" << std::endl;
+        }
+        else if (!std::all_of(price.begin(), price.begin() + decimalPointPos, ::isdigit) || !std::all_of(price.begin() + decimalPointPos + 1, price.end(), ::isdigit)) {
+            std::cout << "Invalid input. Price should have digits only before and after the decimal point.\n" << std::endl;
+        }
+        else if (price.substr(price.find('.') + 1).length() != 2) {
+            std::cout << "Invalid input. Price should have exactly 2 digit after the decimal point.\n" << std::endl;
+        }
+        else if (std::stod(price) <= 0.00) {
+            std::cout << "Invalid input. Price should be greater than 0.00.\n" << std::endl;
+        }
+        else if (!isDivisibleByFiveCents(price)) {
+            std::cout << "Invalid input. Price should be divisible by 5 cents so that the vending machine can give change.\n" << std::endl;
+        }
+        else {
+            valid_price = true;
         }
     }
     std::cout << "\nThis item \"" << name << " - " << description << "\" has now been added to the food menu" << std::endl;
@@ -97,27 +102,40 @@ void RemoveFoodCommand::removeFoodItem(DoublyLinkedList &foodList) const {
         std::cout << "Enter the food id of the food to remove from the menu: ";
         std::string string_id = readInput();
 
-        // return to main menu if hitting enter on an empty line
+        // Return to main menu if hitting enter on an empty line
         if (string_id.size() == 0) {
             return;
         }
-        
-        // get the food item (node) based on input id
-        Node* toRemove = foodList.getNode(string_id);
 
-        // check if the returned Node pointer contain the Node (id found)
-        if (toRemove != nullptr) {
-            // Display item removed message on console
-            std::cout << "\"" << toRemove->data->id << " – " 
-                << toRemove->data->description << "\"" 
-                << " has been removed from the system." << std::endl;
-            // remove the food item from the menu
-            foodList.removeNode(toRemove);
-            valid_id = true;
+        // Check if the ID entered doesn't follow the correct format
+        if (string_id[0] != 'F') {
+            std::cout << "Error: The ID must start with the letter \"F\".\nThe correct format for an ID is \"Fxxxx\", where x is a number.\n" << std::endl;
         }
-        // display error message if food id not found, ask for a valid id
+        else if (string_id.size() != 5) {
+            std::cout << "Error: The ID must only consist of 5 characters.\nThe correct format for an ID is \"Fxxxx\", where x is a number.\n" << std::endl;
+        }
+        // If the ID contains alphabets in the last 4
+        else if (!isNumber(string_id.substr(1))) {
+            std::cout << "Error: The last 4 characters of the ID must be a number.\nThe correct format for an ID is \"Fxxxx\", where x is a number.\n" << std::endl;
+        }
         else{
-            std::cout << "Invalid input. Please enter a valid food id.\n" << std::endl;
+            // Get the food item (node) based on input id
+            Node* toRemove = foodList.getNode(string_id);
+
+            // Check if the returned Node pointer contain the Node (id found)
+            if (toRemove != nullptr) {
+                // Display item removed message on console
+                std::cout << "\"" << toRemove->data->id << " – " 
+                    << toRemove->data->description << "\"" 
+                    << " has been removed from the system." << std::endl;
+                // Remove the food item from the menu
+                foodList.removeNode(toRemove);
+                valid_id = true;
+            }
+            // Display error message if food id not found, ask for a valid id
+            else {
+                std::cout << "Invalid input. The given foodID is not in the menu.\n" << std::endl;
+            }
         }
     }
 };
@@ -169,12 +187,17 @@ void PurchaseMealCommand::purchaseMeal(DoublyLinkedList &foodList, std::vector<C
         }
         else {
             // User entered invalid food ID.
-            std::cout << "Invalid input. The ID entered doesn't correspond to any item on our menu." << std::endl;
+            if (input[0] == 'F' && input.length() == 5 ){
+                std::cout << "Invalid input. The ID entered doesn't correspond to any item on our menu.\n" << std::endl;
+            }
+            else { // Specify the correct format for the ID
+                std::cout << "Error: The ID entered doesn't follow the correct format.\nThe correct format for an ID is \"Fxxxx\", where x is a number.\n" << std::endl;
+            }
         }
     }
 
     // Make sure the user hasn't cancelled their order
-    if(!cancel){
+    if (!cancel) {
         std::cout << "Please hand over the money - type in the value of each note/coin in cents." << std::endl;
         std::cout << "Please enter Ctrl+D or enter on a new line to cancel this purchase." << std::endl;
 
@@ -184,24 +207,24 @@ void PurchaseMealCommand::purchaseMeal(DoublyLinkedList &foodList, std::vector<C
         // Map to keep track of the coins the user has entered - key is denomination, value is counter
         std::map<int, int> userCoins;
 
-        while(!cancel && amountOwed > 0){
+        while (!cancel && amountOwed > 0) {
 
             std::cout << "You still need to give us $" << amountOwed/100 << "." << std::setw(2) << std::setfill('0') << amountOwed%100 << std::setfill(' ') << ": ";
             input = readInput();
 
-            if(input != ""){
-                if(isNumber(input)){
+            if (input != "") {
+                if (isNumber(input)) {
                     coinValue = std::stoi(input);
 
                     // This check could be its own function, makes sure the denomination is valid
-                    if(coinValue == FIVE_CENTS || coinValue == TEN_CENTS || coinValue == TWENTY_CENTS || coinValue == FIFTY_CENTS ||
+                    if (coinValue == FIVE_CENTS || coinValue == TEN_CENTS || coinValue == TWENTY_CENTS || coinValue == FIFTY_CENTS ||
                     coinValue == ONE_DOLLAR || coinValue == TWO_DOLLARS || coinValue == FIVE_DOLLARS || coinValue == TEN_DOLLARS ||
                     coinValue == TWENTY_DOLLARS || coinValue == FIFTY_DOLLARS)
                     {
                         // Denomination is valid, subtract from the amount owed and add/increment map value;
                         amountOwed -= coinValue;
                         
-                        if(userCoins.count(coinValue) > 0){
+                        if (userCoins.count(coinValue) > 0) {
                             userCoins[coinValue]++;
                         }
                         else {
@@ -209,26 +232,28 @@ void PurchaseMealCommand::purchaseMeal(DoublyLinkedList &foodList, std::vector<C
                             userCoins[coinValue] = 1;
                         }
                     }
-                    else{
+                    else {
                         std::cout << "Error: invalid denomination encountered." << std::endl;
+                        std::cout << "Please enter a valid denomination in cents: 5, 10, 20, 50, 100, 200, 500, 1000, 2000, 5000." << std::endl;
                     }
                 }
-                else{
+                else {
                     std::cout << "Error: the coin/note value must be a number." << std::endl;
+                    std::cout << "The number must be a valid denomination in cents: 5, 10, 20, 50, 100, 200, 500, 1000, 2000, 5000." << std::endl;
                 }
             }
             // Empty input
-            else{
+            else {
                 cancel = true;
             }
         }
 
         // We need another cancellation check before handling the changes to the total balance
-        if(!cancel){
+        if (!cancel) {
 
             // Add the user-inserted money to the total balance
             for (Coin& coin : coinCopy) {
-                if(userCoins.count(coin.denom) > 0){
+                if (userCoins.count(coin.denom) > 0) {
                     // Remember that userCoins is a map where denomination is the key, and the value is the count.
                     coin.addCount(userCoins[coin.denom]);
                 }
@@ -283,7 +308,6 @@ void PurchaseMealCommand::purchaseMeal(DoublyLinkedList &foodList, std::vector<C
                 std::cout << "Error: The system cannot refund the exact change. Purchase cancelled." << std::endl;
             }
         }
-
     }
 };
 
