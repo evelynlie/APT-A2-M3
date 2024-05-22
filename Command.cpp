@@ -406,6 +406,7 @@ void LoadCommand::loadFoodData(char *food_file, DoublyLinkedList &foodList) cons
         }
         if (count != 3) {
             std::cerr << "Error: Incorrect number of values in " << food_file << std::endl;
+            std::cerr << "The correct format for an item is \"<ID>|<Name>|<Description>|<Price>\"." << std::endl;
             exit(EXIT_FAILURE);
         }
 
@@ -471,17 +472,15 @@ void LoadCommand::loadFoodData(char *food_file, DoublyLinkedList &foodList) cons
             std::cerr << "Error: An item's price should be divisible by 5 cents so that the vending machine can give change.\n" << std::endl;
             exit(EXIT_FAILURE);
         }
-        else {
-            std::string string_dollars = token.substr(0, decimalPointPos);
-            std::string string_cents = token.substr(decimalPointPos + 1);
-            foodItem->price.dollars = std::stoi(string_dollars);
-            foodItem->price.cents = std::stoi(string_cents);
+        std::string string_dollars = token.substr(0, decimalPointPos);
+        std::string string_cents = token.substr(decimalPointPos + 1);
+        foodItem->price.dollars = std::stoi(string_dollars);
+        foodItem->price.cents = std::stoi(string_cents);
 
-            // Create a new node and add it to the linked list
-            Node* node = new Node;
-            node->data = foodItem;
-            foodList.addNode(node);
-        }
+        // Create a new node and add it to the linked list
+        Node* node = new Node;
+        node->data = foodItem;
+        foodList.addNode(node);
     }
     file.close();
 };
