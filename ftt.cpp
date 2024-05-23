@@ -33,9 +33,17 @@ int main(int argc, char **argv)
         return EXIT_FAILURE;
     }
 
+    // Ask if the user wants to display better messages
+    bool betterMessage = false;
+    std::cout << "Do you want to display better error messages? (Y/N): ";
+    std::string input = readInput();
+    if (input == "Y" || input == "y") {
+        betterMessage = true;
+    }
+
     // Load Food and Coin Data
     DoublyLinkedList* foodList = new DoublyLinkedList();
-    command = std::make_unique<LoadCommand>();
+    command = std::make_unique<LoadCommand>(betterMessage);
     command->execute(argv[1], *foodList);
 
     try {
@@ -69,30 +77,30 @@ int main(int argc, char **argv)
         // Process the selected option by assigning the appropriate command instance to the unique_ptr
         if (option == 1) {
             // Display Meal Options
-            command = std::make_unique<DisplayMealCommand>(); 
+            command = std::make_unique<DisplayMealCommand>(betterMessage); 
         } else if (option == 2) {
             // Purchase Meal
-            command = std::make_unique<PurchaseMealCommand>(); 
+            command = std::make_unique<PurchaseMealCommand>(betterMessage); 
         } else if (option == 3) {
             // Save and Exit
-            command = std::make_unique<SaveCommand>(); 
+            command = std::make_unique<SaveCommand>(betterMessage); 
             exitProgram = true;
         } else if (option == 4) {
             // Add Food
-            command = std::make_unique<AddFoodCommand>(); 
+            command = std::make_unique<AddFoodCommand>(betterMessage); 
         } else if (option == 5) {
             // Remove Food
-            command = std::make_unique<RemoveFoodCommand>(); 
+            command = std::make_unique<RemoveFoodCommand>(betterMessage); 
         } else if (option == 6) {
             // Display Balance
-            command = std::make_unique<DisplayBalanceCommand>(); 
+            command = std::make_unique<DisplayBalanceCommand>(betterMessage); 
         } else if (option == 7) {
             // Abort Program and free memory
             exitProgram = true;
         }
         // This is for a debug method to remove food from stock and test purchase meal
         else if (option == 999) {
-            command = std::make_unique<RemoveStockCommand>();
+            command = std::make_unique<RemoveStockCommand>(betterMessage);
         }
 
         if (command && option != 7) { // If the unique_ptr holds a valid instance and exitProgram is false, execute the command based on the selected option

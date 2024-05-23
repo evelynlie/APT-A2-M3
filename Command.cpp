@@ -56,26 +56,48 @@ void AddFoodCommand::addFoodItem(DoublyLinkedList &foodList) const {
         }
         // Validate input and print specific error message if invalid
         size_t decimalPointPos = price.find('.');
-        if (decimalPointPos == std::string::npos) {
-            std::cout << "Invalid input. Price should have a decimal point in between the dollar and cent.\n" << std::endl;
-        }
-        else if (decimalPointPos <= 0 || decimalPointPos >= price.length() - 1) {
-            std::cout << "Invalid input. Price should have at least 1 digit before and must have exactly 2 digits after the decimal point.\n" << std::endl;
-        }
-        else if (!std::all_of(price.begin(), price.begin() + decimalPointPos, ::isdigit) || !std::all_of(price.begin() + decimalPointPos + 1, price.end(), ::isdigit)) {
-            std::cout << "Invalid input. Price should have digits only before and after the decimal point.\n" << std::endl;
-        }
-        else if (price.substr(price.find('.') + 1).length() != 2) {
-            std::cout << "Invalid input. Price should have exactly 2 digit after the decimal point.\n" << std::endl;
-        }
-        else if (std::stod(price) <= 0.00) {
-            std::cout << "Invalid input. Price should be greater than 0.00.\n" << std::endl;
-        }
-        else if (!isDivisibleByFiveCents(price)) {
-            std::cout << "Invalid input. Price should be divisible by 5 cents so that the vending machine can give change.\n" << std::endl;
+
+        // If better message is enabled, print the error message
+        if (betterMessage){
+            if (decimalPointPos == std::string::npos) {
+                std::cout << "Invalid input. Price should have a decimal point in between the dollar and cent.\n" << std::endl;
+            }
+            else if (decimalPointPos <= 0 || decimalPointPos >= price.length() - 1) {
+                std::cout << "Invalid input. Price should have at least 1 digit before and must have exactly 2 digits after the decimal point.\n" << std::endl;
+            }
+            else if (!std::all_of(price.begin(), price.begin() + decimalPointPos, ::isdigit) || !std::all_of(price.begin() + decimalPointPos + 1, price.end(), ::isdigit)) {
+                std::cout << "Invalid input. Price should have digits only before and after the decimal point.\n" << std::endl;
+            }
+            else if (price.substr(price.find('.') + 1).length() != 2) {
+                std::cout << "Invalid input. Price should have exactly 2 digit after the decimal point.\n" << std::endl;
+            }
+            else if (std::stod(price) <= 0.00) {
+                std::cout << "Invalid input. Price should be greater than 0.00.\n" << std::endl;
+            }
+            else if (!isDivisibleByFiveCents(price)) {
+                std::cout << "Invalid input. Price should be divisible by 5 cents so that the vending machine can give change.\n" << std::endl;
+            }
+            else {
+                valid_price = true;
+            }
         }
         else {
-            valid_price = true;
+            if (decimalPointPos != std::string::npos &&
+                decimalPointPos > 0 && // Decimal point should not be at the beginning
+                decimalPointPos < price.length() - 1 && // Decimal point should not be at the end
+                std::all_of(price.begin(), price.begin() + decimalPointPos, ::isdigit) && // Digits before and after decimal point
+                std::all_of(price.begin() + decimalPointPos + 1, price.end(), ::isdigit) &&
+                price.substr(price.find('.') + 1).length() == 2 && 
+                std::stod(price) > 0.00 && // Price is should be greater than 0.00
+                isDivisibleByFiveCents(price)) {  // Price should be divisible by 5 cents so that the vending machine can give change
+
+                valid_price = true;
+            }
+
+            // If input is invalid, clear input buffer and prompt again
+            if (!valid_price) {
+                std::cout << "Invalid input. Please enter a valid price (in cents) with a decimal point and digits only.\n" << std::endl;
+            }
         }
     }
     std::cout << "\nThis item \"" << name << " - " << description << "\" has now been added to the food menu" << std::endl;
