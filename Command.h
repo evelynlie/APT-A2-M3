@@ -11,9 +11,10 @@ class Command
 {
 protected:
     bool betterMessage;
+    bool helpMessage;
 public:
     // Constructor and Destructor
-    Command(bool betterMessage) : betterMessage(betterMessage) {}
+    Command(bool betterMessage, bool helpMessage) : betterMessage(betterMessage), helpMessage(helpMessage) {}
     virtual ~Command() {}
 
     // Execute the command based on the given parameters
@@ -28,7 +29,7 @@ public:
 // Display the meal items
 class DisplayMealCommand : public Command {
 public:
-    DisplayMealCommand(bool betterMessage) : Command(betterMessage) {}
+    DisplayMealCommand(bool betterMessage, bool helpMessage) : Command(betterMessage, helpMessage) {}
 
     void execute(DoublyLinkedList& foodList) const {
         foodList.printList();
@@ -38,7 +39,7 @@ public:
 // Add a new food item
 class AddFoodCommand : public Command {
 public:
-    AddFoodCommand(bool betterMessage) : Command(betterMessage) {}
+    AddFoodCommand(bool betterMessage, bool helpMessage) : Command(betterMessage, helpMessage) {}
 
     void execute(DoublyLinkedList& foodList) const {
         addFoodItem(foodList);
@@ -51,7 +52,7 @@ private:
 // Remove a food item
 class RemoveFoodCommand : public Command {
 public:
-    RemoveFoodCommand(bool betterMessage) : Command(betterMessage) {}
+    RemoveFoodCommand(bool betterMessage, bool helpMessage) : Command(betterMessage, helpMessage) {}
 
     void execute(DoublyLinkedList& foodList) const {
         removeFoodItem(foodList);
@@ -64,7 +65,7 @@ private:
 // Purchase a meal
 class PurchaseMealCommand : public Command {
 public:
-    PurchaseMealCommand(bool betterMessage) : Command(betterMessage) {}
+    PurchaseMealCommand(bool betterMessage, bool helpMessage) : Command(betterMessage, helpMessage) {}
 
     void execute(DoublyLinkedList& foodList, std::vector<Coin>& coins) const {
         purchaseMeal(foodList, coins);
@@ -77,7 +78,7 @@ private:
 // Display the balance
 class DisplayBalanceCommand : public Command {
 public:
-    DisplayBalanceCommand(bool betterMessage) : Command(betterMessage) {}
+    DisplayBalanceCommand(bool betterMessage, bool helpMessage) : Command(betterMessage, helpMessage) {}
 
     void execute(std::vector<Coin>& coins) const {
         displayBalance(coins);
@@ -90,7 +91,7 @@ private:
 // Save the data
 class SaveCommand : public Command {
 public:
-    SaveCommand(bool betterMessage) : Command(betterMessage) {}
+    SaveCommand(bool betterMessage, bool helpMessage) : Command(betterMessage, helpMessage) {}
 
     void execute(char* food_file, char* coin_file, DoublyLinkedList& foodList, std::vector<Coin>& coins) const {
         saveFoodData(food_file, foodList);
@@ -105,7 +106,7 @@ private:
 // Load the data
 class LoadCommand : public Command {
 public:
-    LoadCommand(bool betterMessage) : Command(betterMessage) {}
+    LoadCommand(bool betterMessage, bool helpMessage) : Command(betterMessage, helpMessage) {}
 
     void execute(char* food_file, DoublyLinkedList& foodList) const {
         loadFoodData(food_file, foodList);
@@ -122,7 +123,7 @@ private:
 // Remove food stock
 class RemoveStockCommand : public Command {
 public:
-    RemoveStockCommand(bool betterMessage) : Command(betterMessage) {}
+    RemoveStockCommand(bool betterMessage, bool helpMessage) : Command(betterMessage, helpMessage) {}
 
     void execute(DoublyLinkedList& foodList) const {
        removeStock(foodList);

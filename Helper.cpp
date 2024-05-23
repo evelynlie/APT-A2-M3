@@ -4,15 +4,57 @@
 #include <cstdlib>
 
 // Helper method to read and return user input in string
-std::string readInput() {
+std::string readInput(bool main, bool helpMessage, const std::string question) {
+    bool valid_input = false;
     std::string input;
-    // if Ctril+D (end of file) is not pressed
-    if(!std::cin.eof()) {
-        std::getline(std::cin, input);
-    }    
-    else{ // If the user presses Ctrl+D, exit the program     
-        std::cerr << "\nGoodbye!" << std::endl;
-        exit(EXIT_FAILURE);
+    if (helpMessage) {
+        while (!valid_input){
+            input = "";
+            // if Ctril+D (end of file) is not pressed
+            if(!std::cin.eof()) {
+                std::getline(std::cin, input);
+            }    
+            else { // If the user presses Ctrl+D, exit the program     
+                std::cerr << "\nGoodbye!" << std::endl;
+                exit(EXIT_FAILURE);
+            }
+
+            if (main) {
+                // If the input is "help", print message and return empty string
+                if (input == "help") {
+                    std::cout << "Enter the number to execute the corresponding function above or Ctrl+D to terminate the program entirely, similar to \"7\".\n" << std::endl;
+                    std::cout << HELP_MAIN_MENU;
+                }
+                else {
+                    valid_input = true;
+                }
+            }
+            else {
+                if (input == "help") {
+                    if (question.find("error message") == std::string::npos){
+                        std::cout << "Enter \"Enter\" to return to the main menu or Ctrl+D to terminate the program entirely.\n" << std::endl;
+                    }
+                    else {
+                        std::cout << "Enter Ctrl+D to terminate the program entirely or \"Y\" or \"N\" to answer the question.\n" << std::endl;
+                    }
+                    std::cout << question;
+                }
+                else {
+                    valid_input = true;
+                }
+            }
+        }
+    }
+    else {
+        input = "";
+        // if Ctril+D (end of file) is not pressed
+        if(!std::cin.eof()) {
+            std::getline(std::cin, input);
+        }    
+        else { // If the user presses Ctrl+D, exit the program     
+            std::cerr << "\nGoodbye!" << std::endl;
+            exit(EXIT_FAILURE);
+        }
     }
     return input;
 }

@@ -15,7 +15,7 @@ void AddFoodCommand::addFoodItem(DoublyLinkedList &foodList) const {
     bool valid_name = false;
     while (!valid_name) {
         std::cout << "Enter the item name: ";
-        name = readInput();
+        name = readInput(false, helpMessage, "Enter the item name: ");
         if (name.size() > NAMELEN) { // Display error message if exceed expected name length, ask for a valid name
             std::cout << "Invalid input. Please enter a valid name with a maximum length of " << NAMELEN << " characters.\n" << std::endl;
         }
@@ -33,7 +33,7 @@ void AddFoodCommand::addFoodItem(DoublyLinkedList &foodList) const {
     bool valid_description = false;
     while (!valid_description) {
         std::cout << "Enter the item description: ";
-        description = readInput();
+        description = readInput(false, helpMessage, "Enter the item description: ");
         if (description.size() > DESCLEN) { // display error message if exceed expected description length, ask for a valid description
             std::cout << "Invalid input. Please enter a valid description with a maximum length of " << DESCLEN << " characters.\n" << std::endl;
         }
@@ -49,7 +49,7 @@ void AddFoodCommand::addFoodItem(DoublyLinkedList &foodList) const {
     bool valid_price = false;
     while (!valid_price) {
         std::cout << "Enter the price for this item (in dollars and cents): ";
-        price = readInput();
+        price = readInput(false, helpMessage, "Enter the price for this item (in dollars and cents): ");
         // Return to main menu if hitting enter on an empty line
         if (price.size() == 0) {
             return;
@@ -128,7 +128,7 @@ void RemoveFoodCommand::removeFoodItem(DoublyLinkedList &foodList) const {
     bool foundID = false;
     while(!foundID) {
         std::cout << "Enter the food id of the food to remove from the menu: ";
-        std::string string_id = readInput();
+        std::string string_id = readInput(false, helpMessage, "Enter the food id of the food to remove from the menu: ");
 
         // Return to main menu if hitting enter on an empty line
         if (string_id.size() == 0) {
@@ -159,7 +159,7 @@ void RemoveFoodCommand::removeFoodItem(DoublyLinkedList &foodList) const {
                 foodList.removeNode(toRemove);
                 foundID = true;
             } else {
-                std::cout << "Invalid input. The given foodID is not in the menu." << std::endl;
+                std::cout << "Invalid input. The given foodID is not in the menu.\n" << std::endl;
             }
         }
     }
@@ -185,7 +185,7 @@ void PurchaseMealCommand::purchaseMeal(DoublyLinkedList &foodList, std::vector<C
     while(!pickedFood && !cancel){
         // Prompt user for food id
         std::cout << "Please enter the ID of the food you wish to purchase (or press enter to cancel):" << std::endl;
-        input = readInput();
+        input = readInput(false, helpMessage, "Please enter the ID of the food you wish to purchase (or press enter to cancel): ");
         
         // Get the food item (node) based on input id
         food = foodList.getNode(input);
@@ -212,16 +212,16 @@ void PurchaseMealCommand::purchaseMeal(DoublyLinkedList &foodList, std::vector<C
         }
         else {
             //User entered invalid food ID.
-            std::cout << "Invalid input. The ID entered doesn't correspond to any item on our menu." << std::endl;
-
             if (betterMessage){
-                // User entered invalid food ID.
-                if (input[0] == 'F' && input.length() == 5 ){
+                if (input[0] == 'F' && input.length() == 5){
                     std::cout << "Invalid input. The ID entered doesn't correspond to any item on our menu.\n" << std::endl;
                 }
                 else { // Specify the correct format for the ID
                     printBetterMessageWithFormat("The ID entered doesn't follow the correct format.");
                 }
+            }
+            else {
+                std::cout << "Invalid input. The ID entered doesn't correspond to any item on our menu.\n" << std::endl;
             }
         }
     }
@@ -238,9 +238,10 @@ void PurchaseMealCommand::purchaseMeal(DoublyLinkedList &foodList, std::vector<C
         std::map<int, int> userCoins;
 
         while (!cancel && amountOwed > 0) {
-
-            std::cout << "You still need to give us $" << amountOwed/100 << "." << std::setw(2) << std::setfill('0') << amountOwed%100 << std::setfill(' ') << ": ";
-            input = readInput();
+            std::stringstream prompt;
+            prompt << "You still need to give us $" << amountOwed / 100 << "." << std::setw(2) << std::setfill('0') << amountOwed % 100 << std::setfill(' ') << ": ";
+            std::cout << prompt.str();
+            input = readInput(false, helpMessage, prompt.str());
 
             if (input != "") {
                 if (isNumber(input)) {
@@ -265,14 +266,14 @@ void PurchaseMealCommand::purchaseMeal(DoublyLinkedList &foodList, std::vector<C
                     else {
                         std::cout << "Error: invalid denomination encountered." << std::endl;
                         if (betterMessage) {
-                            std::cout << "Please enter a valid denomination in cents: 5, 10, 20, 50, 100, 200, 500, 1000, 2000, 5000." << std::endl;
+                            std::cout << "Please enter a valid denomination in cents: 5, 10, 20, 50, 100, 200, 500, 1000, 2000, 5000.\n" << std::endl;
                         }
                     }
                 }
                 else {
                     std::cout << "Error: the coin/note value must be a number." << std::endl;
                     if (betterMessage) {
-                        std::cout << "The number must be a valid denomination in cents: 5, 10, 20, 50, 100, 200, 500, 1000, 2000, 5000." << std::endl;
+                        std::cout << "The number must be a valid denomination in cents: 5, 10, 20, 50, 100, 200, 500, 1000, 2000, 5000.\n" << std::endl;
                     }
                 }
             }
@@ -556,7 +557,7 @@ void RemoveStockCommand::removeStock(DoublyLinkedList &foodList) const {
 
     while(food == nullptr && !cancel){
         std::cout << "Enter meal ID, or leave blank to cancel:" << std::endl;
-        input = readInput();
+        input = readInput(false, helpMessage, "Enter meal ID, or leave blank to cancel: ");
 
         food = foodList.getNode(input);
 

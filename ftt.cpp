@@ -13,8 +13,6 @@
 #include "Command.h"
 #include "Helper.h"
 
-void displayMainMenu();
-
 /**
  * manages the running of the program, initialises data structures, loads
  * data, display the main menu, and handles the processing of options. 
@@ -33,19 +31,39 @@ int main(int argc, char **argv)
         exit(EXIT_FAILURE);
     }
 
-    // Get input either Y or N from the user to display better messages
+    // Get input either Y or N from the user to enable help messages
     bool validMessage = false;
+    bool helpMessage = false;
+        while (!validMessage){
+        std::string input = "";
+        // Ask if the user wants to display better messages
+        std::cout << "Do you want to enable \"help\" commands? (Y/N): ";
+        input = readInput(false, "Do you want to enable \"help\" commands? (Y/N): ");
+        if (input == "Y" || input == "y") {
+            helpMessage = true;
+            validMessage = true;
+        }
+        else if (input == "N" || input == "n") {
+            validMessage = true;
+        }
+        else { // If the input is not Y or N, display an error message
+            std::cerr << "Error: Please enter either Y or N.\n" << std::endl;
+        }
+    }
+
+    // Get input either Y or N from the user to display better messages
+    validMessage = false;
     bool betterMessage = false;
         while (!validMessage){
+        std::string input = "";
         // Ask if the user wants to display better messages
         std::cout << "Do you want to display better error messages? (Y/N): ";
-        std::string input = readInput();
+        input = readInput(false, helpMessage, "Do you want to display better error messages? (Y/N): ");
         if (input == "Y" || input == "y") {
             betterMessage = true;
             validMessage = true;
         }
         else if (input == "N" || input == "n") {
-            betterMessage = false;
             validMessage = true;
         }
         else { // If the input is not Y or N, display an error message
@@ -55,7 +73,7 @@ int main(int argc, char **argv)
 
     // Load Food and Coin Data
     DoublyLinkedList* foodList = new DoublyLinkedList();
-    command = std::make_unique<LoadCommand>(betterMessage);
+    command = std::make_unique<LoadCommand>(betterMessage, helpMessage);
     command->execute(argv[1], *foodList);
 
     try {
@@ -75,8 +93,12 @@ int main(int argc, char **argv)
 
         while (!valid_option) {
             // Display Main Menu
-            displayMainMenu();
-            std::string string_input = readInput();
+            if (helpMessage) {
+                std::cout << HELP_MAIN_MENU;
+            } else {
+                std::cout << DEFAULT_MAIN_MENU;
+            }
+            std::string string_input = readInput(true, helpMessage);
             if (isNumber(string_input) == true && ((std::stoi(string_input) >= 1 && std::stoi(string_input) <= 7) || std::stoi(string_input) == 999)) {
                 valid_option = true;
                 option = std::stoi(string_input);
@@ -89,30 +111,30 @@ int main(int argc, char **argv)
         // Process the selected option by assigning the appropriate command instance to the unique_ptr
         if (option == 1) {
             // Display Meal Options
-            command = std::make_unique<DisplayMealCommand>(betterMessage); 
+            command = std::make_unique<DisplayMealCommand>(betterMessage, helpMessage); 
         } else if (option == 2) {
             // Purchase Meal
-            command = std::make_unique<PurchaseMealCommand>(betterMessage); 
+            command = std::make_unique<PurchaseMealCommand>(betterMessage, helpMessage); 
         } else if (option == 3) {
             // Save and Exit
-            command = std::make_unique<SaveCommand>(betterMessage); 
+            command = std::make_unique<SaveCommand>(betterMessage, helpMessage); 
             exitProgram = true;
         } else if (option == 4) {
             // Add Food
-            command = std::make_unique<AddFoodCommand>(betterMessage); 
+            command = std::make_unique<AddFoodCommand>(betterMessage, helpMessage); 
         } else if (option == 5) {
             // Remove Food
-            command = std::make_unique<RemoveFoodCommand>(betterMessage); 
+            command = std::make_unique<RemoveFoodCommand>(betterMessage, helpMessage); 
         } else if (option == 6) {
             // Display Balance
-            command = std::make_unique<DisplayBalanceCommand>(betterMessage); 
+            command = std::make_unique<DisplayBalanceCommand>(betterMessage, helpMessage); 
         } else if (option == 7) {
             // Abort Program and free memory
             exitProgram = true;
         }
         // This is for a debug method to remove food from stock and test purchase meal
         else if (option == 999) {
-            command = std::make_unique<RemoveStockCommand>(betterMessage);
+            command = std::make_unique<RemoveStockCommand>(betterMessage, helpMessage);
         }
 
         if (command && option != 7) { // If the unique_ptr holds a valid instance and exitProgram is false, execute the command based on the selected option
@@ -139,17 +161,3 @@ int main(int argc, char **argv)
     
     exit(EXIT_SUCCESS);
 }
-
-// Display main menu
-void displayMainMenu(){
-    std::cout<<"Main Menu: "<<std::endl;
-    std::cout<<"   1. Display Meal Options "<<std::endl;
-    std::cout<<"   2. Purchase Meal "<<std::endl;
-    std::cout<<"   3. Save and Exit "<<std::endl;
-    std::cout<<"Administrator-Only Menu: "<<std::endl;
-    std::cout<<"   4. Add Food "<<std::endl;
-    std::cout<<"   5. Remove Food "<<std::endl;
-    std::cout<<"   6. Display Balance "<<std::endl;
-    std::cout<<"   7. Abort Program "<<std::endl;
-    std::cout<<"Select your option (1-7): ";
-};
