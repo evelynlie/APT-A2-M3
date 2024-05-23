@@ -40,7 +40,7 @@ public:
     unsigned count;
 
     // Function to load coin data from a file
-    static std::vector<Coin> loadCoinData(const std::string& filename);
+    static std::vector<Coin> loadCoinData(const std::string& filename, bool betterMessage);
 
     void addCount(int amount);
 };

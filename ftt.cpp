@@ -30,15 +30,27 @@ int main(int argc, char **argv)
     // Check if the number of arguments is correct (2 arguments)
     if (argc != 3) {
         std::cerr << "To run the program: " << argv[0] << " <food_file> <coin_file>"  << std::endl;
-        return EXIT_FAILURE;
+        exit(EXIT_FAILURE);
     }
 
-    // Ask if the user wants to display better messages
+    // Get input either Y or N from the user to display better messages
+    bool validMessage = false;
     bool betterMessage = false;
-    std::cout << "Do you want to display better error messages? (Y/N): ";
-    std::string input = readInput();
-    if (input == "Y" || input == "y") {
-        betterMessage = true;
+        while (!validMessage){
+        // Ask if the user wants to display better messages
+        std::cout << "Do you want to display better error messages? (Y/N): ";
+        std::string input = readInput();
+        if (input == "Y" || input == "y") {
+            betterMessage = true;
+            validMessage = true;
+        }
+        else if (input == "N" || input == "n") {
+            betterMessage = false;
+            validMessage = true;
+        }
+        else { // If the input is not Y or N, display an error message
+            std::cerr << "Error: Please enter either Y or N.\n" << std::endl;
+        }
     }
 
     // Load Food and Coin Data
@@ -47,12 +59,12 @@ int main(int argc, char **argv)
     command->execute(argv[1], *foodList);
 
     try {
-        coins = command->execute(argv[2]);
+        coins = command->execute(argv[2], betterMessage);
     } catch (const std::exception& e) {
         std::cerr << "Error: " << e.what() << std::endl;
         delete foodList;
         foodList = nullptr;
-        return EXIT_FAILURE;
+        exit(EXIT_FAILURE);
     }
 
     // Run the program
@@ -125,7 +137,7 @@ int main(int argc, char **argv)
     delete foodList;
     foodList = nullptr;
     
-    return EXIT_SUCCESS;
+    exit(EXIT_SUCCESS);
 }
 
 // Display main menu

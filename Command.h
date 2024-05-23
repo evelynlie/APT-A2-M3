@@ -15,13 +15,13 @@ public:
     // Constructor and Destructor
     Command(bool betterMessage) : betterMessage(betterMessage) {}
     virtual ~Command() {}
-    
+
     // Execute the command based on the given parameters
     virtual void execute(std::vector<Coin>& coins) const {};
     virtual void execute(DoublyLinkedList& foodList) const {};
     virtual void execute(char* food_file, DoublyLinkedList& foodList) const {};
     virtual void execute(DoublyLinkedList& foodList, std::vector<Coin>& coins) const {};
-    virtual std::vector<Coin> execute(char* coin_file) const { return std::vector<Coin>(); };
+    virtual std::vector<Coin> execute(char* coin_file, bool betterMessage) const { return std::vector<Coin>(); };
     virtual void execute(char* food_file, char* coin_file, DoublyLinkedList& foodList, std::vector<Coin>& coins) const {};
 };
 
@@ -111,8 +111,8 @@ public:
         loadFoodData(food_file, foodList);
     }
 
-    std::vector<Coin> execute(char* coin_file) const { 
-        return Coin::loadCoinData(coin_file); 
+    std::vector<Coin> execute(char* coin_file, bool betterMessage) const { 
+        return Coin::loadCoinData(coin_file, betterMessage); 
     }
 
 private:

@@ -117,10 +117,16 @@ void AddFoodCommand::addFoodItem(DoublyLinkedList &foodList) const {
     foodList.addNode(node);
 };
 
+// Function to print a better error message
+void printBetterMessageWithFormat(const std::string &message) {
+    // Print an error message
+    std::cout << "Error: " << message << "\nThe correct format for an ID is \"Fxxxx\", where x is a number.\n" << std::endl;
+}
+
 // Function to be executed to remove the food item based on input foodID
 void RemoveFoodCommand::removeFoodItem(DoublyLinkedList &foodList) const {
-    bool valid_id = false;
-    while(!valid_id) {
+    bool foundID = false;
+    while(!foundID) {
         std::cout << "Enter the food id of the food to remove from the menu: ";
         std::string string_id = readInput();
 
@@ -129,34 +135,31 @@ void RemoveFoodCommand::removeFoodItem(DoublyLinkedList &foodList) const {
             return;
         }
 
-        // Check if the ID entered doesn't follow the correct format
-        if (string_id[0] != 'F') {
-            std::cout << "Error: The ID must start with the letter \"F\".\nThe correct format for an ID is \"Fxxxx\", where x is a number.\n" << std::endl;
-        }
-        else if (string_id.size() != 5) {
-            std::cout << "Error: The ID must only consist of 5 characters.\nThe correct format for an ID is \"Fxxxx\", where x is a number.\n" << std::endl;
-        }
-        // If the ID contains alphabets in the last 4
-        else if (!isNumber(string_id.substr(1))) {
-            std::cout << "Error: The last 4 characters of the ID must be a number.\nThe correct format for an ID is \"Fxxxx\", where x is a number.\n" << std::endl;
-        }
-        else{
-            // Get the food item (node) based on input id
-            Node* toRemove = foodList.getNode(string_id);
-
-            // Check if the returned Node pointer contain the Node (id found)
-            if (toRemove != nullptr) {
-                // Display item removed message on console
-                std::cout << "\"" << toRemove->data->id << " – " 
-                    << toRemove->data->description << "\"" 
-                    << " has been removed from the system." << std::endl;
-                // Remove the food item from the menu
-                foodList.removeNode(toRemove);
+        bool valid_id = false;
+        if (betterMessage) {
+            if (string_id[0] != 'F') {
+                printBetterMessageWithFormat("The ID must start with the letter \"F\".");
+            } else if (string_id.size() != 5) {
+                printBetterMessageWithFormat("The ID must only consist of 5 characters.");
+            } else if (!isNumber(string_id.substr(1))) {
+                printBetterMessageWithFormat("The last 4 characters of the ID must be a number.");
+            } else {
                 valid_id = true;
             }
-            // Display error message if food id not found, ask for a valid id
-            else {
-                std::cout << "Invalid input. The given foodID is not in the menu.\n" << std::endl;
+        } else {
+            valid_id = true;
+        }
+
+        if (valid_id) {
+            Node* toRemove = foodList.getNode(string_id);
+            if (toRemove != nullptr) {
+                std::cout << "\"" << toRemove->data->id << " – " 
+                        << toRemove->data->description << "\"" 
+                        << " has been removed from the system." << std::endl;
+                foodList.removeNode(toRemove);
+                foundID = true;
+            } else {
+                std::cout << "Invalid input. The given foodID is not in the menu." << std::endl;
             }
         }
     }
@@ -208,12 +211,17 @@ void PurchaseMealCommand::purchaseMeal(DoublyLinkedList &foodList, std::vector<C
             cancel = true;
         }
         else {
-            // User entered invalid food ID.
-            if (input[0] == 'F' && input.length() == 5 ){
-                std::cout << "Invalid input. The ID entered doesn't correspond to any item on our menu.\n" << std::endl;
-            }
-            else { // Specify the correct format for the ID
-                std::cout << "Error: The ID entered doesn't follow the correct format.\nThe correct format for an ID is \"Fxxxx\", where x is a number.\n" << std::endl;
+            //User entered invalid food ID.
+            std::cout << "Invalid input. The ID entered doesn't correspond to any item on our menu." << std::endl;
+
+            if (betterMessage){
+                // User entered invalid food ID.
+                if (input[0] == 'F' && input.length() == 5 ){
+                    std::cout << "Invalid input. The ID entered doesn't correspond to any item on our menu.\n" << std::endl;
+                }
+                else { // Specify the correct format for the ID
+                    printBetterMessageWithFormat("The ID entered doesn't follow the correct format.");
+                }
             }
         }
     }
@@ -256,12 +264,16 @@ void PurchaseMealCommand::purchaseMeal(DoublyLinkedList &foodList, std::vector<C
                     }
                     else {
                         std::cout << "Error: invalid denomination encountered." << std::endl;
-                        std::cout << "Please enter a valid denomination in cents: 5, 10, 20, 50, 100, 200, 500, 1000, 2000, 5000." << std::endl;
+                        if (betterMessage) {
+                            std::cout << "Please enter a valid denomination in cents: 5, 10, 20, 50, 100, 200, 500, 1000, 2000, 5000." << std::endl;
+                        }
                     }
                 }
                 else {
                     std::cout << "Error: the coin/note value must be a number." << std::endl;
-                    std::cout << "The number must be a valid denomination in cents: 5, 10, 20, 50, 100, 200, 500, 1000, 2000, 5000." << std::endl;
+                    if (betterMessage) {
+                        std::cout << "The number must be a valid denomination in cents: 5, 10, 20, 50, 100, 200, 500, 1000, 2000, 5000." << std::endl;
+                    }
                 }
             }
             // Empty input
@@ -428,7 +440,9 @@ void LoadCommand::loadFoodData(char *food_file, DoublyLinkedList &foodList) cons
         }
         if (count != 3) {
             std::cerr << "Error: Incorrect number of values in " << food_file << std::endl;
-            std::cerr << "The correct format for an item is \"<ID>|<Name>|<Description>|<Price>\"." << std::endl;
+            if (betterMessage) {
+                std::cerr << "The correct format for an item is \"<ID>|<Name>|<Description>|<Price>\"." << std::endl;
+            }
             exit(EXIT_FAILURE);
         }
 
@@ -438,7 +452,9 @@ void LoadCommand::loadFoodData(char *food_file, DoublyLinkedList &foodList) cons
         if (token.length() != IDLEN || token.substr(0, 1) != "F"){
             // Error: ID format is incorrect
             std::cerr << "Error: The format of an item's ID is incorrect in " << food_file << "." << std::endl;
-            std::cerr << "The correct ID format is \"Fxxxx\", where x is a number." << std::endl;
+            if (betterMessage) {
+                std::cerr << "The correct ID format is \"Fxxxx\", where x is a number." << std::endl;
+            }
             exit(EXIT_FAILURE);
         }
         foodItem->id = token;
@@ -448,7 +464,9 @@ void LoadCommand::loadFoodData(char *food_file, DoublyLinkedList &foodList) cons
         if (token.length() > NAMELEN) {
             // Error: Name is too long
             std::cerr << "Error: An item's name is too long in " << food_file << "." << std::endl;
-            std::cerr << "The maximum length of an item's name is 40 characters." << std::endl;
+            if (betterMessage) {
+                std::cerr << "The maximum length of an item's name is 40 characters." << std::endl;
+            }
             exit(EXIT_FAILURE);
         }
         foodItem->name = token;
@@ -458,7 +476,9 @@ void LoadCommand::loadFoodData(char *food_file, DoublyLinkedList &foodList) cons
         if (token.length() > DESCLEN) {
             // Error: Description is too long
             std::cerr << "Error: An item's description is too long in " << food_file << "." << std::endl;
-            std::cerr << "The maximum length of an item's description is 255 characters." << std::endl;
+            if (betterMessage) {    
+                std::cerr << "The maximum length of an item's description is 255 characters." << std::endl;
+            }
             exit(EXIT_FAILURE);
         }
         foodItem->description = token;
@@ -470,29 +490,45 @@ void LoadCommand::loadFoodData(char *food_file, DoublyLinkedList &foodList) cons
         std::getline(iss, token, '|');
         size_t decimalPointPos = token.find('.'); // Find the position of the dot
         // Validate input and print specific error message if invalid
-        if (decimalPointPos == std::string::npos) {
-            std::cerr << "Error: An item's price should have a decimal point in between the dollar and cent.\n" << std::endl;
-            exit(EXIT_FAILURE);
+        if (betterMessage) {
+            if (decimalPointPos == std::string::npos) {
+                std::cerr << "Error: An item's price should have a decimal point in between the dollar and cent.\n" << std::endl;
+                exit(EXIT_FAILURE);
+            }
+            else if (decimalPointPos <= 0 || decimalPointPos >= token.length() - 1) {
+                std::cerr << "Error: An item's price should have at least 1 digit before and must have exactly 2 digits after the decimal point.\n" << std::endl;
+                exit(EXIT_FAILURE);
+            }
+            else if (!std::all_of(token.begin(), token.begin() + decimalPointPos, ::isdigit) || !std::all_of(token.begin() + decimalPointPos + 1, token.end(), ::isdigit)) {
+                std::cerr << "Error: An item's price should have digits only before and after the decimal point.\n" << std::endl;
+                exit(EXIT_FAILURE);
+            }
+            else if (token.substr(token.find('.') + 1).length() != 2) {
+                std::cerr << "Error: An item's price should have exactly 2 digit after the decimal point.\n" << std::endl;
+                exit(EXIT_FAILURE);
+            }
+            else if (std::stod(token) <= 0.00) {
+                std::cerr << "Error: An item's price should be greater than 0.00.\n" << std::endl;
+                exit(EXIT_FAILURE);
+            }
+            else if (!isDivisibleByFiveCents(token)) {
+                std::cerr << "Error: An item's price should be divisible by 5 cents so that the vending machine can give change.\n" << std::endl;
+                exit(EXIT_FAILURE);
+            }
         }
-        else if (decimalPointPos <= 0 || decimalPointPos >= token.length() - 1) {
-            std::cerr << "Error: An item's price should have at least 1 digit before and must have exactly 2 digits after the decimal point.\n" << std::endl;
-            exit(EXIT_FAILURE);
-        }
-        else if (!std::all_of(token.begin(), token.begin() + decimalPointPos, ::isdigit) || !std::all_of(token.begin() + decimalPointPos + 1, token.end(), ::isdigit)) {
-            std::cerr << "Error: An item's price should have digits only before and after the decimal point.\n" << std::endl;
-            exit(EXIT_FAILURE);
-        }
-        else if (token.substr(token.find('.') + 1).length() != 2) {
-            std::cerr << "Error: An item's price should have exactly 2 digit after the decimal point.\n" << std::endl;
-            exit(EXIT_FAILURE);
-        }
-        else if (std::stod(token) <= 0.00) {
-            std::cerr << "Error: An item's price should be greater than 0.00.\n" << std::endl;
-            exit(EXIT_FAILURE);
-        }
-        else if (!isDivisibleByFiveCents(token)) {
-            std::cerr << "Error: An item's price should be divisible by 5 cents so that the vending machine can give change.\n" << std::endl;
-            exit(EXIT_FAILURE);
+        else {
+            if (decimalPointPos == std::string::npos ||
+                decimalPointPos <= 0 || // Decimal point should not be at the beginning
+                decimalPointPos >= token.length() - 1 || // Decimal point should not be at the end
+                !std::all_of(token.begin(), token.begin() + decimalPointPos, ::isdigit) || // Digits before and after decimal point
+                !std::all_of(token.begin() + decimalPointPos + 1, token.end(), ::isdigit) ||
+                token.substr(token.find('.') + 1).length() != 2 ||
+                std::stod(token) <= 0.00 || // Price is should be greater than 0.00
+                !isDivisibleByFiveCents(token)) {  // Price should be divisible by 5 cents so that the vending machine can give change
+
+                std::cerr << "Error: Price format is incorrect" << std::endl;
+                exit(EXIT_FAILURE);
+            }
         }
         std::string string_dollars = token.substr(0, decimalPointPos);
         std::string string_cents = token.substr(decimalPointPos + 1);
@@ -540,7 +576,7 @@ void RemoveStockCommand::removeStock(DoublyLinkedList &foodList) const {
 };
 
 // Function to be executed to load coin data from a .dat file
-std::vector<Coin> Coin::loadCoinData(const std::string& filename) {
+std::vector<Coin> Coin::loadCoinData(const std::string& filename, bool betterMessage) {
     // Open the file to read
     std::ifstream file(filename);
 
@@ -569,7 +605,9 @@ std::vector<Coin> Coin::loadCoinData(const std::string& filename) {
         if (delimiterCount != 1) {
             // display error message
             std::cerr << "Error: Incorrect number of values in coins.dat" << std::endl;
-            std::cerr << "The correct format for a coin is \"<denomination>,<quantity>\"." << std::endl;
+            if (betterMessage) {
+                std::cerr << "The correct format for a coin is \"<denomination>,<quantity>\"." << std::endl;
+            }
             // exit program
             exit(EXIT_FAILURE);
         }
@@ -584,7 +622,9 @@ std::vector<Coin> Coin::loadCoinData(const std::string& filename) {
             denom != FIVE_DOLLARS && denom != TEN_DOLLARS &&
             denom != TWENTY_DOLLARS && denom != FIFTY_DOLLARS) {
             std::cerr << "Error: Invalid denomination in coins.dat" << std::endl;
-            std::cerr << "The valid denominations are 5, 10, 20, 50, 100, 200, 500, 1000, 2000, 5000." << std::endl;
+            if (betterMessage) {
+                std::cerr << "The valid denominations are 5, 10, 20, 50, 100, 200, 500, 1000, 2000, 5000." << std::endl;
+            }
             // Exist the program if denomination is invalid
             exit(EXIT_FAILURE);
         }
