@@ -51,7 +51,7 @@ int main(int argc, char **argv)
         }
     }
 
-    // Get input either Y or N from the user to display better messages
+    // Get input either Y or N from the user to display better error messages
     validMessage = false;
     bool betterMessage = false;
         while (!validMessage){

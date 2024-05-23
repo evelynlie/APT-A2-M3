@@ -7,6 +7,8 @@
 std::string readInput(bool main, bool helpMessage, const std::string question) {
     bool valid_input = false;
     std::string input;
+
+    // If help message is enabled
     if (helpMessage) {
         while (!valid_input){
             input = "";
@@ -20,7 +22,7 @@ std::string readInput(bool main, bool helpMessage, const std::string question) {
             }
 
             if (main) {
-                // If the input is "help", print message and return empty string
+                // If the input is "help" and it's in the main menu, print message
                 if (input == "help") {
                     std::cout << "Enter the number to execute the corresponding function above or Ctrl+D to terminate the program entirely, similar to \"7\".\n" << std::endl;
                     std::cout << HELP_MAIN_MENU;
@@ -30,6 +32,7 @@ std::string readInput(bool main, bool helpMessage, const std::string question) {
                 }
             }
             else {
+                // If the input is "help" and it's not in the main menu, print message
                 if (input == "help") {
                     if (question.find("error message") == std::string::npos){
                         std::cout << "Enter \"Enter\" to return to the main menu or Ctrl+D to terminate the program entirely.\n" << std::endl;
@@ -45,6 +48,7 @@ std::string readInput(bool main, bool helpMessage, const std::string question) {
             }
         }
     }
+    // If help message is disabled
     else {
         input = "";
         // if Ctril+D (end of file) is not pressed
