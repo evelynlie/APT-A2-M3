@@ -182,7 +182,7 @@ void PurchaseMealCommand::purchaseMeal(DoublyLinkedList &foodList, std::vector<C
     std::cout << "Purchase Meal" << std::endl;
     std::cout << "-------------" << std::endl;
 
-    while(!pickedFood && !cancel){
+    while (!pickedFood && !cancel) {
         // Prompt user for food id
         std::cout << "Please enter the ID of the food you wish to purchase (or press enter to cancel):" << std::endl;
         input = readInput(false, helpMessage, "Please enter the ID of the food you wish to purchase (or press enter to cancel): ");
@@ -191,9 +191,8 @@ void PurchaseMealCommand::purchaseMeal(DoublyLinkedList &foodList, std::vector<C
         food = foodList.getNode(input);
         
         // Check if the returned Node pointer contain the Node (id found)
-        if(food != nullptr){
-
-            if(food->data->on_hand > 0){
+        if (food != nullptr) {
+            if (food->data->on_hand > 0) {
                 // We have the food in stock, so set the amount the user will owe, as well as the description
                 amountOwed = food->data->price.dollars * 100 + food->data->price.cents;
 
@@ -201,19 +200,19 @@ void PurchaseMealCommand::purchaseMeal(DoublyLinkedList &foodList, std::vector<C
                 amountOwed/100 << "." << std::setw(2) << std::setfill('0') << amountOwed%100 << "." << std::setfill(' ') << std::endl;
                 pickedFood = true;
             }
-            else{
+            else {
                 // User entered a valid ID, but the food isn't in stock.
                 std::cout << "Sorry, this item isn't available at the moment." << std::endl;
             }
         }
-        else if(input == ""){
+        else if (input == "") {
             // User left empty input, canceling their order
             cancel = true;
         }
         else {
             //User entered invalid food ID.
-            if (betterMessage){
-                if (input[0] == 'F' && input.length() == 5){
+            if (betterMessage) {
+                if (input[0] == 'F' && input.length() == 5) {
                     std::cout << "Invalid input. The ID entered doesn't correspond to any item on our menu.\n" << std::endl;
                 }
                 else { // Specify the correct format for the ID
@@ -285,6 +284,27 @@ void PurchaseMealCommand::purchaseMeal(DoublyLinkedList &foodList, std::vector<C
 
         // We need another cancellation check before handling the changes to the total balance
         if (!cancel) {
+            //Add the user-inserted money to the existing balance
+            for (Coin& coin : coinCopy) {
+                if (userCoins.count(coin.denom) > 0){
+                    //remember that userCoins is a map where denomination is the key, and the value is the count.
+                    coin.addCount(userCoins[coin.denom]);
+                    userCoins.erase(coin.denom);
+                }
+            }
+
+            // Add the user-inserted money which its denom is not previously existed in coinCopy
+            if (userCoins.size() > 0) {
+                for (const std::pair<int, int> userCoin : userCoins) {
+                    Denomination denom = static_cast<Denomination>(userCoin.first);
+                    unsigned count = userCoin.second;
+                    // Create Coin object and add to vector
+                    Coin coin;
+                    coin.denom = denom;
+                    coin.count = count;
+                    coinCopy.push_back(coin);
+                }
+            }
 
             // Add the user-inserted money to the total balance
             for (Coin& coin : coinCopy) {
@@ -305,9 +325,9 @@ void PurchaseMealCommand::purchaseMeal(DoublyLinkedList &foodList, std::vector<C
             std::vector<int> change;
 
             // Refund loop - note that if we have given the exact money, amountOwed == 0, so we won't go in this loop at all.
-            while(amountOwed != 0 && i >= 0){
+            while (amountOwed != 0 && i >= 0) {
                 // Give back the largest coin/note possible until we need to move to a smaller one or we run out of said coin.
-                while(amountOwed >= coinCopy[i].denom && coinCopy[i].count > 0){
+                while (amountOwed >= coinCopy[i].denom && coinCopy[i].count > 0) {
                     // We found a valid coin to refund, so decrement the counter in the list,
                     // subtract the coin from the amount owed, and add the coin to the change vector
                     amountOwed -= coinCopy[i].denom;
@@ -317,13 +337,13 @@ void PurchaseMealCommand::purchaseMeal(DoublyLinkedList &foodList, std::vector<C
                 i--;
             }
 
-            if(amountOwed == 0){
+            if (amountOwed == 0) {
                 // Purchase successful, print out the change refunded if there is any
-                if(change.size() > 0){
+                if (change.size() > 0) {
                     std::cout << "Your change is: ";
 
-                    for(unsigned i = 0; i < change.size(); i++){
-                        if(change[i] >= 100){
+                    for (unsigned i = 0; i < change.size(); i++) {
+                        if (change[i] >= 100) {
                             // Denomination is greater than or equal to 100, so it's a dollar
                             std::cout << "$" << change[i] / 100 << " ";
                         }
@@ -339,7 +359,7 @@ void PurchaseMealCommand::purchaseMeal(DoublyLinkedList &foodList, std::vector<C
                 food->data->on_hand--;
                 coins = coinCopy;
             }
-            else{
+            else {
                 std::cout << "Error: The system cannot refund the exact change. Purchase cancelled." << std::endl;
             }
         }
@@ -349,6 +369,9 @@ void PurchaseMealCommand::purchaseMeal(DoublyLinkedList &foodList, std::vector<C
 // Function to be executed to print vending machine balance
 void DisplayBalanceCommand::displayBalance(std::vector<Coin>& coins) const {
     double totalBalance = 0;
+
+    // Sort coins in ascending order
+    std::sort(coins.begin(), coins.end(), compareCoins);
 
     // Calculate total balance
     for (const Coin& coin : coins) {
