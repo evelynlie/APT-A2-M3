@@ -1,12 +1,12 @@
-Main Menu: 
+Do you want to enable "help" commands? (Y/N): Do you want to display better error messages? (Y/N): Main Menu: 
    1. Display Meal Options 
-   2. Purchase Meal 
-   3. Save and Exit 
-Administrator-Only Menu: 
-   4. Add Food 
-   5. Remove Food 
-   6. Display Balance 
-   7. Abort Program 
+   2. Purchase Meal
+   3. Save and Exit
+Administrator-Only Menu:
+   4. Add Food
+   5. Remove Food
+   6. Display Balance
+   7. Abort Program
 Select your option (1-7): This new meal item will have the Item id of F0008
 Enter the item name: Invalid input. Please enter a valid name with a maximum length of 40 characters.
 
@@ -33,13 +33,13 @@ This item "Apple - Red Japanese Apple" has now been added to the food menu
 
 Main Menu: 
    1. Display Meal Options 
-   2. Purchase Meal 
-   3. Save and Exit 
-Administrator-Only Menu: 
-   4. Add Food 
-   5. Remove Food 
-   6. Display Balance 
-   7. Abort Program 
+   2. Purchase Meal
+   3. Save and Exit
+Administrator-Only Menu:
+   4. Add Food
+   5. Remove Food
+   6. Display Balance
+   7. Abort Program
 Select your option (1-7): 
 Food Menu
 ---------
@@ -56,11 +56,11 @@ F0007|Kelewele                                          |$11.50
 
 Main Menu: 
    1. Display Meal Options 
-   2. Purchase Meal 
-   3. Save and Exit 
-Administrator-Only Menu: 
-   4. Add Food 
-   5. Remove Food 
-   6. Display Balance 
-   7. Abort Program 
+   2. Purchase Meal
+   3. Save and Exit
+Administrator-Only Menu:
+   4. Add Food
+   5. Remove Food
+   6. Display Balance
+   7. Abort Program
 Select your option (1-7): 
