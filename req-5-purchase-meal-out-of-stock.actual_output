@@ -1,38 +1,38 @@
-Main Menu: 
+Do you want to enable "help" commands? (Y/N): Do you want to display better error messages? (Y/N): Main Menu: 
    1. Display Meal Options 
-   2. Purchase Meal 
-   3. Save and Exit 
-Administrator-Only Menu: 
-   4. Add Food 
-   5. Remove Food 
-   6. Display Balance 
-   7. Abort Program 
+   2. Purchase Meal
+   3. Save and Exit
+Administrator-Only Menu:
+   4. Add Food
+   5. Remove Food
+   6. Display Balance
+   7. Abort Program
 Select your option (1-7): This is a debug function that removes all stocks of a meal.
 Enter meal ID, or leave blank to cancel:
 Stock for meal with ID F0003 reduced to 0.
 
 Main Menu: 
    1. Display Meal Options 
-   2. Purchase Meal 
-   3. Save and Exit 
-Administrator-Only Menu: 
-   4. Add Food 
-   5. Remove Food 
-   6. Display Balance 
-   7. Abort Program 
+   2. Purchase Meal
+   3. Save and Exit
+Administrator-Only Menu:
+   4. Add Food
+   5. Remove Food
+   6. Display Balance
+   7. Abort Program
 Select your option (1-7): Purchase Meal
 -------------
-Please enter the ID of the food you wish to purchase(or leave empty to cancel):
+Please enter the ID of the food you wish to purchase (or press enter to cancel):
 Sorry, this item isn't available at the moment.
-Please enter the ID of the food you wish to purchase(or leave empty to cancel):
+Please enter the ID of the food you wish to purchase (or press enter to cancel):
 
 Main Menu: 
    1. Display Meal Options 
-   2. Purchase Meal 
-   3. Save and Exit 
-Administrator-Only Menu: 
-   4. Add Food 
-   5. Remove Food 
-   6. Display Balance 
-   7. Abort Program 
+   2. Purchase Meal
+   3. Save and Exit
+Administrator-Only Menu:
+   4. Add Food
+   5. Remove Food
+   6. Display Balance
+   7. Abort Program
 Select your option (1-7): 

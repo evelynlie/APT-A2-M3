@@ -1,12 +1,12 @@
-Main Menu: 
+Do you want to enable "help" commands? (Y/N): Do you want to display better error messages? (Y/N): Main Menu: 
    1. Display Meal Options 
-   2. Purchase Meal 
-   3. Save and Exit 
-Administrator-Only Menu: 
-   4. Add Food 
-   5. Remove Food 
-   6. Display Balance 
-   7. Abort Program 
+   2. Purchase Meal
+   3. Save and Exit
+Administrator-Only Menu:
+   4. Add Food
+   5. Remove Food
+   6. Display Balance
+   7. Abort Program
 Select your option (1-7): 
 Balance Summary
 ---------------
@@ -23,33 +23,33 @@ Denom  | Quantity | Value
 2000   | 10       |$ 200.00
 5000   | 10       |$ 500.00
 ---------------------------
-                   $ 908.10
+                   $ 908.00
 
 Main Menu: 
    1. Display Meal Options 
-   2. Purchase Meal 
-   3. Save and Exit 
-Administrator-Only Menu: 
-   4. Add Food 
-   5. Remove Food 
-   6. Display Balance 
-   7. Abort Program 
+   2. Purchase Meal
+   3. Save and Exit
+Administrator-Only Menu:
+   4. Add Food
+   5. Remove Food
+   6. Display Balance
+   7. Abort Program
 Select your option (1-7): Purchase Meal
 -------------
-Please enter the ID of the food you wish to purchase(or leave empty to cancel):
+Please enter the ID of the food you wish to purchase (or press enter to cancel):
 You have selected "Baklava - Rich middle eastern cake of thin layers of flaky pastry filled with nuts and honey". This will cost you $8.50.
 Please hand over the money - type in the value of each note/coin in cents.
 Please enter Ctrl+D or enter on a new line to cancel this purchase.
 You still need to give us $8.50: You still need to give us $3.50: You still need to give us $1.50: You still need to give us $0.50: 
 Main Menu: 
    1. Display Meal Options 
-   2. Purchase Meal 
-   3. Save and Exit 
-Administrator-Only Menu: 
-   4. Add Food 
-   5. Remove Food 
-   6. Display Balance 
-   7. Abort Program 
+   2. Purchase Meal
+   3. Save and Exit
+Administrator-Only Menu:
+   4. Add Food
+   5. Remove Food
+   6. Display Balance
+   7. Abort Program
 Select your option (1-7): 
 Balance Summary
 ---------------
@@ -66,15 +66,15 @@ Denom  | Quantity | Value
 2000   | 10       |$ 200.00
 5000   | 10       |$ 500.00
 ---------------------------
-                   $ 916.60
+                   $ 916.00
 
 Main Menu: 
    1. Display Meal Options 
-   2. Purchase Meal 
-   3. Save and Exit 
-Administrator-Only Menu: 
-   4. Add Food 
-   5. Remove Food 
-   6. Display Balance 
-   7. Abort Program 
-Select your option (1-7):
+   2. Purchase Meal
+   3. Save and Exit
+Administrator-Only Menu:
+   4. Add Food
+   5. Remove Food
+   6. Display Balance
+   7. Abort Program
+Select your option (1-7): 
