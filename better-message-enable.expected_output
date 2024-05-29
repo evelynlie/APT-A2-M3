@@ -1,0 +1,127 @@
+Do you want to enable "help" commands? (Y/N): Do you want to display better error messages? (Y/N): Main Menu: 
+   1. Display Meal Options 
+   2. Purchase Meal
+   3. Save and Exit
+Administrator-Only Menu:
+   4. Add Food
+   5. Remove Food
+   6. Display Balance
+   7. Abort Program
+Select your option (1-7): Purchase Meal
+-------------
+Please enter the ID of the food you wish to purchase (or press enter to cancel):
+Error: The ID entered doesn't follow the correct format.
+The correct format for an ID is "Fxxxx", where x is a number.
+
+Please enter the ID of the food you wish to purchase (or press enter to cancel):
+Invalid input. The ID entered doesn't correspond to any item on our menu.
+
+Please enter the ID of the food you wish to purchase (or press enter to cancel):
+Invalid input. The ID entered doesn't correspond to any item on our menu.
+
+Please enter the ID of the food you wish to purchase (or press enter to cancel):
+Error: The ID entered doesn't follow the correct format.
+The correct format for an ID is "Fxxxx", where x is a number.
+
+Please enter the ID of the food you wish to purchase (or press enter to cancel):
+You have selected "Baklava - Rich middle eastern cake of thin layers of flaky pastry filled with nuts and honey". This will cost you $8.50.
+Please hand over the money - type in the value of each note/coin in cents.
+Please enter Ctrl+D or enter on a new line to cancel this purchase.
+You still need to give us $8.50: Error: invalid denomination encountered.
+Please enter a valid denomination in cents: 5, 10, 20, 50, 100, 200, 500, 1000, 2000, 5000.
+
+You still need to give us $8.50: Your change is: $1 50c 
+
+Main Menu: 
+   1. Display Meal Options 
+   2. Purchase Meal
+   3. Save and Exit
+Administrator-Only Menu:
+   4. Add Food
+   5. Remove Food
+   6. Display Balance
+   7. Abort Program
+Select your option (1-7): This new meal item will have the Item id of F0008
+Enter the item name: Invalid input. Please enter a valid name with a maximum length of 40 characters.
+
+Enter the item name: Enter the item description: Invalid input. Please enter a valid description with a maximum length of 255 characters.
+
+Enter the item description: Enter the price for this item (in dollars and cents): Invalid input. Price should have at least 1 digit before and must have exactly 2 digits after the decimal point.
+
+Enter the price for this item (in dollars and cents): Invalid input. Price should have exactly 2 digit after the decimal point.
+
+Enter the price for this item (in dollars and cents): Invalid input. Price should be greater than 0.00.
+
+Enter the price for this item (in dollars and cents): Invalid input. Price should have exactly 2 digit after the decimal point.
+
+Enter the price for this item (in dollars and cents): Invalid input. Price should have at least 1 digit before and must have exactly 2 digits after the decimal point.
+
+Enter the price for this item (in dollars and cents): Invalid input. Price should have a decimal point in between the dollar and cent.
+
+Enter the price for this item (in dollars and cents): Invalid input. Price should have digits only before and after the decimal point.
+
+Enter the price for this item (in dollars and cents): Invalid input. Price should have digits only before and after the decimal point.
+
+Enter the price for this item (in dollars and cents): 
+This item "Apple - Red Japanese Apple" has now been added to the food menu
+
+Main Menu: 
+   1. Display Meal Options 
+   2. Purchase Meal
+   3. Save and Exit
+Administrator-Only Menu:
+   4. Add Food
+   5. Remove Food
+   6. Display Balance
+   7. Abort Program
+Select your option (1-7): 
+Food Menu
+---------
+ID   |Name                                              |Price    
+------------------------------------------------------------------
+F0008|Apple                                             |$10.00
+F0001|Baklava                                           |$ 8.50
+F0005|Bibimbab                                          |$15.80
+F0006|Fondue                                            |$31.50
+F0002|Gnocchi                                           |$12.50
+F0003|Haggis                                            |$18.70
+F0004|Jambalaya                                         |$23.00
+F0007|Kelewele                                          |$11.50
+
+Main Menu: 
+   1. Display Meal Options 
+   2. Purchase Meal
+   3. Save and Exit
+Administrator-Only Menu:
+   4. Add Food
+   5. Remove Food
+   6. Display Balance
+   7. Abort Program
+Select your option (1-7): Enter the food id of the food to remove from the menu: Invalid input. The given foodID is not in the menu.
+
+Enter the food id of the food to remove from the menu: Error: The last 4 characters of the ID must be a number.
+The correct format for an ID is "Fxxxx", where x is a number.
+
+Enter the food id of the food to remove from the menu: "F0001 – Rich middle eastern cake of thin layers of flaky pastry filled with nuts and honey" has been removed from the system.
+
+Main Menu: 
+   1. Display Meal Options 
+   2. Purchase Meal
+   3. Save and Exit
+Administrator-Only Menu:
+   4. Add Food
+   5. Remove Food
+   6. Display Balance
+   7. Abort Program
+Select your option (1-7): Invalid input. Please enter a number between 1 and 7.
+
+Main Menu: 
+   1. Display Meal Options 
+   2. Purchase Meal
+   3. Save and Exit
+Administrator-Only Menu:
+   4. Add Food
+   5. Remove Food
+   6. Display Balance
+   7. Abort Program
+Select your option (1-7): 
