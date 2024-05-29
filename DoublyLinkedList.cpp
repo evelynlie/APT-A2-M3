@@ -93,7 +93,7 @@ Node* DoublyLinkedList::getNode(std::string id) const {
     // If id is empty, return nullptr
     if (!id.empty()) {
         // Validate the id
-        if (id[0] == 'F' && id.length() == 5){
+        if (id[0] == 'F' && id.length() == 5 && isdigit(id[1]) && isdigit(id[2]) && isdigit(id[3]) && isdigit(id[4])){
             // Extract the numeric part of the ID
             int idNumber = std::stoi(id.substr(1));
 
