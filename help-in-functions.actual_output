@@ -1,0 +1,91 @@
+Do you want to enable "help" commands? (Y/N): Do you want to display better error messages? (Y/N): Main Menu: 
+   1. Display Meal Options 
+   2. Purchase Meal
+   3. Save and Exit
+Administrator-Only Menu:
+   4. Add Food
+   5. Remove Food
+   6. Display Balance
+   7. Abort Program
+Note: Enter "help" anytime to know what commands can be executed.
+Select your option (1-7): Enter the number to execute the corresponding function above or Ctrl+D to terminate the program entirely, similar to "7".
+
+Main Menu: 
+   1. Display Meal Options 
+   2. Purchase Meal
+   3. Save and Exit
+Administrator-Only Menu:
+   4. Add Food
+   5. Remove Food
+   6. Display Balance
+   7. Abort Program
+Note: Enter "help" anytime to know what commands can be executed.
+Select your option (1-7): Purchase Meal
+-------------
+Please enter the ID of the food you wish to purchase (or press enter to cancel):
+Enter "Enter" to return to the main menu or Ctrl+D to terminate the program entirely.
+
+Please enter the ID of the food you wish to purchase (or press enter to cancel): You have selected "Baklava - Rich middle eastern cake of thin layers of flaky pastry filled with nuts and honey". This will cost you $8.50.
+Please hand over the money - type in the value of each note/coin in cents.
+Please enter Ctrl+D or enter on a new line to cancel this purchase.
+You still need to give us $8.50: Enter "Enter" to return to the main menu or Ctrl+D to terminate the program entirely.
+
+You still need to give us $8.50: Your change is: $1 50c 
+
+Main Menu: 
+   1. Display Meal Options 
+   2. Purchase Meal
+   3. Save and Exit
+Administrator-Only Menu:
+   4. Add Food
+   5. Remove Food
+   6. Display Balance
+   7. Abort Program
+Note: Enter "help" anytime to know what commands can be executed.
+Select your option (1-7): This new meal item will have the Item id of F0008
+Enter the item name: Enter "Enter" to return to the main menu or Ctrl+D to terminate the program entirely.
+
+Enter the item name: Enter the item description: Enter "Enter" to return to the main menu or Ctrl+D to terminate the program entirely.
+
+Enter the item description: Enter the price for this item (in dollars and cents): Enter "Enter" to return to the main menu or Ctrl+D to terminate the program entirely.
+
+Enter the price for this item (in dollars and cents): 
+This item "Test - hello world" has now been added to the food menu
+
+Main Menu: 
+   1. Display Meal Options 
+   2. Purchase Meal
+   3. Save and Exit
+Administrator-Only Menu:
+   4. Add Food
+   5. Remove Food
+   6. Display Balance
+   7. Abort Program
+Note: Enter "help" anytime to know what commands can be executed.
+Select your option (1-7): Enter the food id of the food to remove from the menu: Enter "Enter" to return to the main menu or Ctrl+D to terminate the program entirely.
+
+Enter the food id of the food to remove from the menu: "F0002 – Italian pasta dish made from potato and served with a rich cheese sauce" has been removed from the system.
+
+Main Menu: 
+   1. Display Meal Options 
+   2. Purchase Meal
+   3. Save and Exit
+Administrator-Only Menu:
+   4. Add Food
+   5. Remove Food
+   6. Display Balance
+   7. Abort Program
+Note: Enter "help" anytime to know what commands can be executed.
+Select your option (1-7): Enter the number to execute the corresponding function above or Ctrl+D to terminate the program entirely, similar to "7".
+
+Main Menu: 
+   1. Display Meal Options 
+   2. Purchase Meal
+   3. Save and Exit
+Administrator-Only Menu:
+   4. Add Food
+   5. Remove Food
+   6. Display Balance
+   7. Abort Program
+Note: Enter "help" anytime to know what commands can be executed.
+Select your option (1-7): 
