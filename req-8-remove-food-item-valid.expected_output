@@ -1,12 +1,12 @@
-Main Menu: 
+Do you want to enable "help" commands? (Y/N): Do you want to display better error messages? (Y/N): Main Menu: 
    1. Display Meal Options 
-   2. Purchase Meal 
-   3. Save and Exit 
-Administrator-Only Menu: 
-   4. Add Food 
-   5. Remove Food 
-   6. Display Balance 
-   7. Abort Program 
+   2. Purchase Meal
+   3. Save and Exit
+Administrator-Only Menu:
+   4. Add Food
+   5. Remove Food
+   6. Display Balance
+   7. Abort Program
 Select your option (1-7): 
 Food Menu
 ---------
@@ -22,24 +22,24 @@ F0007|Kelewele                                          |$11.50
 
 Main Menu: 
    1. Display Meal Options 
-   2. Purchase Meal 
-   3. Save and Exit 
-Administrator-Only Menu: 
-   4. Add Food 
-   5. Remove Food 
-   6. Display Balance 
-   7. Abort Program 
+   2. Purchase Meal
+   3. Save and Exit
+Administrator-Only Menu:
+   4. Add Food
+   5. Remove Food
+   6. Display Balance
+   7. Abort Program
 Select your option (1-7): Enter the food id of the food to remove from the menu: "F0001 – Rich middle eastern cake of thin layers of flaky pastry filled with nuts and honey" has been removed from the system.
 
 Main Menu: 
    1. Display Meal Options 
-   2. Purchase Meal 
-   3. Save and Exit 
-Administrator-Only Menu: 
-   4. Add Food 
-   5. Remove Food 
-   6. Display Balance 
-   7. Abort Program 
+   2. Purchase Meal
+   3. Save and Exit
+Administrator-Only Menu:
+   4. Add Food
+   5. Remove Food
+   6. Display Balance
+   7. Abort Program
 Select your option (1-7): 
 Food Menu
 ---------
@@ -54,24 +54,24 @@ F0007|Kelewele                                          |$11.50
 
 Main Menu: 
    1. Display Meal Options 
-   2. Purchase Meal 
-   3. Save and Exit 
-Administrator-Only Menu: 
-   4. Add Food 
-   5. Remove Food 
-   6. Display Balance 
-   7. Abort Program 
+   2. Purchase Meal
+   3. Save and Exit
+Administrator-Only Menu:
+   4. Add Food
+   5. Remove Food
+   6. Display Balance
+   7. Abort Program
 Select your option (1-7): Enter the food id of the food to remove from the menu: "F0003 – Scottish delicacy made from tripe and oats and served with whiskey sauce" has been removed from the system.
 
 Main Menu: 
    1. Display Meal Options 
-   2. Purchase Meal 
-   3. Save and Exit 
-Administrator-Only Menu: 
-   4. Add Food 
-   5. Remove Food 
-   6. Display Balance 
-   7. Abort Program 
+   2. Purchase Meal
+   3. Save and Exit
+Administrator-Only Menu:
+   4. Add Food
+   5. Remove Food
+   6. Display Balance
+   7. Abort Program
 Select your option (1-7): 
 Food Menu
 ---------
@@ -85,24 +85,24 @@ F0007|Kelewele                                          |$11.50
 
 Main Menu: 
    1. Display Meal Options 
-   2. Purchase Meal 
-   3. Save and Exit 
-Administrator-Only Menu: 
-   4. Add Food 
-   5. Remove Food 
-   6. Display Balance 
-   7. Abort Program 
+   2. Purchase Meal
+   3. Save and Exit
+Administrator-Only Menu:
+   4. Add Food
+   5. Remove Food
+   6. Display Balance
+   7. Abort Program
 Select your option (1-7): Enter the food id of the food to remove from the menu: "F0007 – From Ghana, fried plantains seasoned with spices" has been removed from the system.
 
 Main Menu: 
    1. Display Meal Options 
-   2. Purchase Meal 
-   3. Save and Exit 
-Administrator-Only Menu: 
-   4. Add Food 
-   5. Remove Food 
-   6. Display Balance 
-   7. Abort Program 
+   2. Purchase Meal
+   3. Save and Exit
+Administrator-Only Menu:
+   4. Add Food
+   5. Remove Food
+   6. Display Balance
+   7. Abort Program
 Select your option (1-7): 
 Food Menu
 ---------
@@ -115,11 +115,11 @@ F0004|Jambalaya                                         |$23.00
 
 Main Menu: 
    1. Display Meal Options 
-   2. Purchase Meal 
-   3. Save and Exit 
-Administrator-Only Menu: 
-   4. Add Food 
-   5. Remove Food 
-   6. Display Balance 
-   7. Abort Program 
+   2. Purchase Meal
+   3. Save and Exit
+Administrator-Only Menu:
+   4. Add Food
+   5. Remove Food
+   6. Display Balance
+   7. Abort Program
 Select your option (1-7): 
