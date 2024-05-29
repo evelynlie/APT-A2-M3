@@ -1,12 +1,12 @@
-Main Menu: 
+Do you want to enable "help" commands? (Y/N): Do you want to display better error messages? (Y/N): Main Menu: 
    1. Display Meal Options 
-   2. Purchase Meal 
-   3. Save and Exit 
-Administrator-Only Menu: 
-   4. Add Food 
-   5. Remove Food 
-   6. Display Balance 
-   7. Abort Program 
+   2. Purchase Meal
+   3. Save and Exit
+Administrator-Only Menu:
+   4. Add Food
+   5. Remove Food
+   6. Display Balance
+   7. Abort Program
 Select your option (1-7): 
 Balance Summary
 ---------------
@@ -25,8 +25,8 @@ Denom  | Quantity | Value
 -------------------------
                    $ 0.00
 
-Main Menu:
-   1. Display Meal Options
+Main Menu: 
+   1. Display Meal Options 
    2. Purchase Meal
    3. Save and Exit
 Administrator-Only Menu:
@@ -36,14 +36,14 @@ Administrator-Only Menu:
    7. Abort Program
 Select your option (1-7): Purchase Meal
 -------------
-Please enter the ID of the food you wish to purchase(or leave empty to cancel):
+Please enter the ID of the food you wish to purchase (or press enter to cancel):
 You have selected "Jambalaya - Creole rish dish containing prawns, chicken, sausage and vegetables". This will cost you $23.00.
 Please hand over the money - type in the value of each note/coin in cents.
 Please enter Ctrl+D or enter on a new line to cancel this purchase.
 You still need to give us $23.00: You still need to give us $3.00: Error: The system cannot refund the exact change. Purchase cancelled.
 
-Main Menu:
-   1. Display Meal Options
+Main Menu: 
+   1. Display Meal Options 
    2. Purchase Meal
    3. Save and Exit
 Administrator-Only Menu:
@@ -69,8 +69,8 @@ Denom  | Quantity | Value
 -------------------------
                    $ 0.00
 
-Main Menu:
-   1. Display Meal Options
+Main Menu: 
+   1. Display Meal Options 
    2. Purchase Meal
    3. Save and Exit
 Administrator-Only Menu:
@@ -78,4 +78,4 @@ Administrator-Only Menu:
    5. Remove Food
    6. Display Balance
    7. Abort Program
-Select your option (1-7):
+Select your option (1-7): 
